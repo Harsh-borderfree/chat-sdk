@@ -2,11 +2,11 @@ import React from 'react'
 import ChatComponents from '../ChatComponents/ChatComponents'
 import { Provider } from 'react-redux'
 
-const BfreeChat = ({ eventID, groupID, store }) => {
-  console.log('+++STORRE', eventID, groupID, store)
+const BfreeChat = props => {
+  const { eventID, groupID, store } = props
   return (
     <Provider store={store}>
-      <ChatComponents eventID={eventID} groupID={groupID} />
+      <ChatComponents {...props} />
     </Provider>
   )
 }

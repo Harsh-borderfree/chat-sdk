@@ -70,7 +70,7 @@
   "homepage": "https://github.com/detaysoft/react-chat-elements#readme",
   "scripts": {
     "dev-server": "webpack-dev-server --config webpack.dev.config.js",
-    "build": "node node_modules/typescript/bin/tsc -p tsconfig.prod.json && yarn run copy-files",
+    "build": "node node_modules/typescript/bin/tsc -p tsconfig.prod.json && yarn run copy-files --watch",
     "copy-files": "copyfiles -u 1 src/**/*.css build/",
     "clear:build": "rimraf dist build",
     "move:types": "copyfiles -u 1 src/type.d.ts dist/",
@@ -96,7 +96,8 @@
     "@mui/material": "^5.10.0",
     "@mui/styled-engine-sc": "^5.10.0",
     "@mui/styles": "^5.9.3",
-    "react-redux": "^7.2.4"
+    "react-redux": "^7.2.4",
+    "grapheme-splitter": "^1.0.4"
   },
   "browserslist": {
     "production": [

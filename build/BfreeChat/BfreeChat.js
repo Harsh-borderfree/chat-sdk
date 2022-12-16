@@ -13,9 +13,8 @@ import { jsx as _jsx } from "react/jsx-runtime";
 import React from 'react';
 import ChatComponents from '../ChatComponents/ChatComponents';
 import { Provider } from 'react-redux';
-var BfreeChat = function (_a) {
-    var eventID = _a.eventID, groupID = _a.groupID, store = _a.store;
-    console.log('+++STORRE', eventID, groupID, store);
-    return (_jsx(Provider, __assign({ store: store }, { children: _jsx(ChatComponents, { eventID: eventID, groupID: groupID }) })));
+var BfreeChat = function (props) {
+    var eventID = props.eventID, groupID = props.groupID, store = props.store;
+    return (_jsx(Provider, __assign({ store: store }, { children: _jsx(ChatComponents, __assign({}, props)) })));
 };
 export default BfreeChat;
