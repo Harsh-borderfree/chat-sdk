@@ -117,12 +117,12 @@ const ChatInput = props => {
   // };
 
   return (
-    <>
+    <div className='RCChat-Input-Container'>
       {userData?.displayName ? (
         <>
           <TextField
             style={{
-              width: '98%',
+              width: '100%',
               backgroundColor: 'white',
               padding: '6px 4px',
               paddingBottom: maxLimitExceeds ? '0px' : '8px',
@@ -341,7 +341,7 @@ const ChatInput = props => {
           </Button>
         </>
       )}
-    </>
+    </div>
   )
 }
 

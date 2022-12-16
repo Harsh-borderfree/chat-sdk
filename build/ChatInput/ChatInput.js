@@ -49,8 +49,8 @@ var ChatInput = function (props) {
         return (GetRole((_a = customisedEvents[eventID]) === null || _a === void 0 ? void 0 : _a.permissions, email) === 'v2_host' ||
             GetRole((_b = customisedEvents[eventID]) === null || _b === void 0 ? void 0 : _b.permissions, email) === 'v2_primary_host');
     };
-    return (_jsx(_Fragment, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
-                        width: '98%',
+    return (_jsx("div", __assign({ className: 'RCChat-Input-Container' }, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
+                        width: '100%',
                         backgroundColor: 'white',
                         padding: '6px 4px',
                         paddingBottom: maxLimitExceeds ? '0px' : '8px',
@@ -85,6 +85,6 @@ var ChatInput = function (props) {
                                             setDisplayNameBox(false);
                                         } })] }), _jsxs("div", __assign({ className: 'change-display-name-container' }, { children: [_jsx(TextField, { id: 'outlined-basic', placeholder: t('login.Enter_display'), variant: 'outlined', size: 'small', InputProps: {
                                             autoFocus: true,
-                                        } }), _jsx(Button, __assign({ className: 'save-display-name', xid: '4V' }, { children: false ? (_jsx(CircularProgress, { color: 'inherit', className: 'changeDisplayNameBtn' })) : (_jsx(Typography, { children: t('admintab.save') })) }))] }))] }) }))), _jsx(Button, __assign({ style: { minWidth: '60px' }, className: 'display-name-con-btn2', xid: '4W', onClick: function () { return setDisplayNameBox(true); } }, { children: t('login.Enter_display') }))] })) }));
+                                        } }), _jsx(Button, __assign({ className: 'save-display-name', xid: '4V' }, { children: false ? (_jsx(CircularProgress, { color: 'inherit', className: 'changeDisplayNameBtn' })) : (_jsx(Typography, { children: t('admintab.save') })) }))] }))] }) }))), _jsx(Button, __assign({ style: { minWidth: '60px' }, className: 'display-name-con-btn2', xid: '4W', onClick: function () { return setDisplayNameBox(true); } }, { children: t('login.Enter_display') }))] })) })));
 };
 export default ChatInput;
