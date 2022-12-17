@@ -97,7 +97,8 @@
     "@mui/styled-engine-sc": "^5.10.0",
     "@mui/styles": "^5.9.3",
     "react-redux": "^7.2.4",
-    "grapheme-splitter": "^1.0.4"
+    "grapheme-splitter": "^1.0.4",
+    "@borderfreefinancial/dev-revo-json-consumer-sdk": "latest"
   },
   "browserslist": {
     "production": [

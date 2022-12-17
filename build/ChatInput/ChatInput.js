@@ -52,7 +52,7 @@ var ChatInput = function (props) {
     return (_jsx("div", __assign({ className: 'RCChat-Input-Container' }, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
                         width: '100%',
                         backgroundColor: 'white',
-                        padding: '6px 4px',
+                        padding: '6px 0px',
                         paddingBottom: maxLimitExceeds ? '0px' : '8px',
                         transition: 'all 0.5s',
                     }, className: "".concat(maxLimitExceeds ? 'error-textfield' : 'not-error', " message-textField"), id: textfieldLineHeight < 116 ? 'outlined-textarea' : 'outlined-textarea-scroll', placeholder: checkForBlockEmail(loggedInEmail, currentEvent) >= 0

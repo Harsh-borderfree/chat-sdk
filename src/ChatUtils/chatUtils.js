@@ -27,3 +27,16 @@ export const GetRole = (eventPermissions, userid, event_type = 'live_stream') =>
   if (event_type == 'call_1to1') return 'v2_1to1_customer'
   return 'v2_default'
 }
+
+export const isUrl = s => {
+  var res = s.match(/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g)
+  return res !== null
+}
+
+export const newLineHandler = string => {
+  if (string.includes('\n')) {
+    return string.split('\n')
+  } else {
+    return [string]
+  }
+}

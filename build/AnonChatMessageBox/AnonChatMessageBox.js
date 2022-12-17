@@ -15,8 +15,8 @@ import { Typography } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 var AnonChatMessageBox = function (_a) {
     var _b;
-    var message = _a.message;
+    var messageData = _a.messageData;
     var t = useTranslation().t;
-    return (_jsx(_Fragment, { children: _jsx("div", __assign({ className: 'anon-container-mbox' }, { children: _jsxs(Typography, { children: [_jsx("span", { children: (_b = message === null || message === void 0 ? void 0 : message.message_text) === null || _b === void 0 ? void 0 : _b.split('joined the chat')[0] }), _jsx("span", { children: t('preview.joined_chat') })] }) })) }));
+    return (_jsx(_Fragment, { children: _jsx("div", __assign({ className: 'anon-container-mbox' }, { children: _jsxs(Typography, { children: [_jsx("span", { children: (_b = messageData === null || messageData === void 0 ? void 0 : messageData.message_text) === null || _b === void 0 ? void 0 : _b.split('joined the chat')[0] }), _jsx("span", { children: t('preview.joined_chat') })] }) })) }));
 };
 export default AnonChatMessageBox;

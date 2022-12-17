@@ -124,7 +124,7 @@ const ChatInput = props => {
             style={{
               width: '100%',
               backgroundColor: 'white',
-              padding: '6px 4px',
+              padding: '6px 0px',
               paddingBottom: maxLimitExceeds ? '0px' : '8px',
               transition: 'all 0.5s',
             }}
