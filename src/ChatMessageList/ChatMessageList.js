@@ -6,9 +6,15 @@ import ChatReplyMessage from '../ChatReplyMessage/ChatReplyMessage'
 const ChatMessageList = props => {
   const messagesList = props.chatMessageList
 
+  let bottomInputElement = document.getElementsByClassName('RCChat-Input-Container')
+  let bottomInputHeight = 50
+  if (bottomInputElement) {
+    bottomInputHeight = bottomInputElement[0]?.clientHeight
+  }
+
   return (
     <>
-      <div className='Chat-message-list-container'>
+      <div className='Chat-message-list-container' style={{ height: `calc(100% - ${bottomInputHeight}px)` }}>
         {messagesList.map(message => {
           // For anon joined the chat message
           if (
@@ -24,19 +30,11 @@ const ChatMessageList = props => {
           }
           // All Normal and replied message
           else {
-            if (message?.reply_type) {
-              return (
-                <>
-                  <ChatReplyMessage messageData={message} {...props} />
-                </>
-              )
-            } else {
-              return (
-                <>
-                  <ChatMessageBox messageData={message} {...props} />
-                </>
-              )
-            }
+            return (
+              <>
+                <ChatMessageBox messageData={message} {...props} />
+              </>
+            )
           }
         })}
       </div>

@@ -7,9 +7,9 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     }
     return to.concat(ar || Array.prototype.slice.call(from));
 };
-export var showThreeDotsInDisplayName = function (str) {
-    if ((str === null || str === void 0 ? void 0 : str.length) >= 12) {
-        var prefix = str === null || str === void 0 ? void 0 : str.slice(0, 12);
+export var showThreeDotsAfterNText = function (str, N) {
+    if ((str === null || str === void 0 ? void 0 : str.length) >= N) {
+        var prefix = str === null || str === void 0 ? void 0 : str.slice(0, N);
         return prefix + '...';
     }
     return str;

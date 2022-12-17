@@ -16,7 +16,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
-import { GetRole, showThreeDotsInDisplayName } from '../ChatUtils/chatUtils';
+import { GetRole, showThreeDotsAfterNText } from '../ChatUtils/chatUtils';
 import { checkForBlockEmail } from '../ChatUtils/chatUtils';
 import TagFacesIcon from '@mui/icons-material/TagFaces';
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined';
@@ -49,7 +49,7 @@ var ChatInput = function (props) {
         return (GetRole((_a = customisedEvents[eventID]) === null || _a === void 0 ? void 0 : _a.permissions, email) === 'v2_host' ||
             GetRole((_b = customisedEvents[eventID]) === null || _b === void 0 ? void 0 : _b.permissions, email) === 'v2_primary_host');
     };
-    return (_jsx("div", __assign({ className: 'RCChat-Input-Container RCInput-checkbox bottomShadow' }, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
+    return (_jsx("div", __assign({ className: 'RCChat-Input-Container RCInput-checkbox' }, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
                         width: '100%',
                         padding: '6px 0px',
                         paddingBottom: maxLimitExceeds ? '0px' : '8px',
@@ -58,9 +58,9 @@ var ChatInput = function (props) {
                         ? t('preview.admin_blocked')
                         : isHostAndPrimaryHost(localStorage.getItem('user-email'))
                             ? hostChatAsBrand && hostChatAsBrand[loggedInEmail]
-                                ? "Chat as ".concat(showThreeDotsInDisplayName(sessionStorage.getItem('ORGNAME')))
-                                : "Chat as ".concat(showThreeDotsInDisplayName(userData === null || userData === void 0 ? void 0 : userData.displayName))
-                            : "Chat as ".concat(showThreeDotsInDisplayName(userData === null || userData === void 0 ? void 0 : userData.displayName)), multiline: true, onChange: function (e) {
+                                ? "Chat as ".concat(showThreeDotsAfterNText(sessionStorage.getItem('ORGNAME'), 12))
+                                : "Chat as ".concat(showThreeDotsAfterNText(userData === null || userData === void 0 ? void 0 : userData.displayName, 12))
+                            : "Chat as ".concat(showThreeDotsAfterNText(userData === null || userData === void 0 ? void 0 : userData.displayName, 12)), multiline: true, onChange: function (e) {
                         if (splitter.splitGraphemes(e.target.value).length > 200) {
                             setMaxLimitExceeds(true);
                         }

@@ -11,7 +11,8 @@ const ChatComponents = props => {
   const { eventID, groupID, isChatLoading } = props
   const allReduxMessages = useSelector(state => state?.chat?.allMessages)
   const allChatMessages = allReduxMessages[eventID] || []
-
+  const EventPermission = useSelector(state => state.permission)
+  const userRole = EventPermission?.event_permission[eventID]?.event_role
   const replayMessages = useSelector(state => state?.chat?.replayMessages)
   const allReplayMessages = replayMessages ? replayMessages[eventID] : []
   const [chatMessageList, setChatMessageList] = useState([])
@@ -45,8 +46,8 @@ const ChatComponents = props => {
 
   return (
     <>
-      <div className='RCChat-container'>
-        <div className='RCChat-title-div topShadow'>
+      <div className={`RCChat-container ${userRole}`}>
+        <div className='RCChat-title-div'>
           <Typography variant='h6'>{t('preview.chat')}</Typography>
           <IconButton
             className='RCChat-title-close-iconbutton'

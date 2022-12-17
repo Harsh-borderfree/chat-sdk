@@ -1,6 +1,6 @@
-export const showThreeDotsInDisplayName = str => {
-  if (str?.length >= 12) {
-    var prefix = str?.slice(0, 12)
+export const showThreeDotsAfterNText = (str, N) => {
+  if (str?.length >= N) {
+    var prefix = str?.slice(0, N)
     return prefix + '...'
   }
   return str

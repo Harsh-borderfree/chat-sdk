@@ -28,12 +28,15 @@ import { useTranslation } from 'react-i18next';
 import ChatMessageList from '../ChatMessageList/ChatMessageList';
 import { CircularProgress } from '@mui/material';
 var ChatComponents = function (props) {
+    var _a;
     var eventID = props.eventID, groupID = props.groupID, isChatLoading = props.isChatLoading;
     var allReduxMessages = useSelector(function (state) { var _a; return (_a = state === null || state === void 0 ? void 0 : state.chat) === null || _a === void 0 ? void 0 : _a.allMessages; });
     var allChatMessages = allReduxMessages[eventID] || [];
+    var EventPermission = useSelector(function (state) { return state.permission; });
+    var userRole = (_a = EventPermission === null || EventPermission === void 0 ? void 0 : EventPermission.event_permission[eventID]) === null || _a === void 0 ? void 0 : _a.event_role;
     var replayMessages = useSelector(function (state) { var _a; return (_a = state === null || state === void 0 ? void 0 : state.chat) === null || _a === void 0 ? void 0 : _a.replayMessages; });
     var allReplayMessages = replayMessages ? replayMessages[eventID] : [];
-    var _a = useState([]), chatMessageList = _a[0], setChatMessageList = _a[1];
+    var _b = useState([]), chatMessageList = _b[0], setChatMessageList = _b[1];
     var eventsState = useSelector(function (state) { return state.events; });
     var streamEvents = eventsState.streamEvents, customisedEvents = eventsState.customisedEvents;
     var currentEvent = customisedEvents[eventID];
@@ -53,7 +56,7 @@ var ChatComponents = function (props) {
             }
         }
     }, [allChatMessages, allReplayMessages]);
-    return (_jsx(_Fragment, { children: _jsxs("div", __assign({ className: 'RCChat-container' }, { children: [_jsxs("div", __assign({ className: 'RCChat-title-div topShadow' }, { children: [_jsx(Typography, __assign({ variant: 'h6' }, { children: t('preview.chat') })), _jsx(IconButton, __assign({ className: 'RCChat-title-close-iconbutton', xid: '4M', onClick: function () {
+    return (_jsx(_Fragment, { children: _jsxs("div", __assign({ className: "RCChat-container ".concat(userRole) }, { children: [_jsxs("div", __assign({ className: 'RCChat-title-div' }, { children: [_jsx(Typography, __assign({ variant: 'h6' }, { children: t('preview.chat') })), _jsx(IconButton, __assign({ className: 'RCChat-title-close-iconbutton', xid: '4M', onClick: function () {
                                 props === null || props === void 0 ? void 0 : props.setCurrentComponent('RCProductsPanel');
                             }, size: 'large' }, { children: _jsx(CloseIcon, { className: 'RCChat-title-close-icon' }) }))] })), _jsxs("div", __assign({ className: 'RCChat-content-container' }, { children: [isChatLoading ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: _jsx(CircularProgress, {}) }))) : !isChatLoading && allChatMessages.length === 0 ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: "NO Messages" }))) : (_jsx(ChatMessageList, __assign({ chatMessageList: chatMessageList }, props))), _jsx(ChatInput, __assign({}, props))] }))] })) }));
 };

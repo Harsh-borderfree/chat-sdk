@@ -15,8 +15,14 @@ import AnonChatMessageBox from '../AnonChatMessageBox/AnonChatMessageBox';
 import ChatMessageBox from '../ChatMessageBox/ChatMessageBox';
 import ChatReplyMessage from '../ChatReplyMessage/ChatReplyMessage';
 var ChatMessageList = function (props) {
+    var _a;
     var messagesList = props.chatMessageList;
-    return (_jsx(_Fragment, { children: _jsx("div", __assign({ className: 'Chat-message-list-container' }, { children: messagesList.map(function (message) {
+    var bottomInputElement = document.getElementsByClassName('RCChat-Input-Container');
+    var bottomInputHeight = 50;
+    if (bottomInputElement) {
+        bottomInputHeight = (_a = bottomInputElement[0]) === null || _a === void 0 ? void 0 : _a.clientHeight;
+    }
+    return (_jsx(_Fragment, { children: _jsx("div", __assign({ className: 'Chat-message-list-container', style: { height: "calc(100% - ".concat(bottomInputHeight, "px)") } }, { children: messagesList.map(function (message) {
                 var _a, _b;
                 if (((_a = message === null || message === void 0 ? void 0 : message.sender_id) === null || _a === void 0 ? void 0 : _a.includes('anon_')) &&
                     ((_b = message === null || message === void 0 ? void 0 : message.message_text) === null || _b === void 0 ? void 0 : _b.includes('joined the chat')) &&
@@ -24,12 +30,7 @@ var ChatMessageList = function (props) {
                     return (_jsx(_Fragment, { children: _jsx(AnonChatMessageBox, { messageData: message }) }));
                 }
                 else {
-                    if (message === null || message === void 0 ? void 0 : message.reply_type) {
-                        return (_jsx(_Fragment, { children: _jsx(ChatReplyMessage, __assign({ messageData: message }, props)) }));
-                    }
-                    else {
-                        return (_jsx(_Fragment, { children: _jsx(ChatMessageBox, __assign({ messageData: message }, props)) }));
-                    }
+                    return (_jsx(_Fragment, { children: _jsx(ChatMessageBox, __assign({ messageData: message }, props)) }));
                 }
             }) })) }));
 };

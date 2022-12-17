@@ -3,10 +3,11 @@ import { isUrl } from '../ChatUtils/chatUtils'
 import { useSelector } from 'react-redux'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
 import { Typography } from '@mui/material'
-import { showThreeDotsInDisplayName } from '../ChatUtils/chatUtils'
+import { showThreeDotsAfterNText } from '../ChatUtils/chatUtils'
 import BlueTickForBrand from './ChatBlueTickBrand'
 import ChatTextMesage from './ChatTextMesage'
 import ChatImageMessage from './ChatImageMessage'
+import ChatReplyMessage from '../ChatReplyMessage/ChatReplyMessage'
 
 const ChatMessageBox = props => {
   const message = props?.messageData
@@ -19,7 +20,7 @@ const ChatMessageBox = props => {
         <div className='rce-mbox-title-left'>
           {message?.sender_name && (
             <Typography className='rce-mbox-title-left-content' style={{ fontWeight: '600' }}>
-              {showThreeDotsInDisplayName(message?.sender_name)}
+              {showThreeDotsAfterNText(message?.sender_name, 12)}
             </Typography>
           )}
           {/* COmmented  for invite status icon will do it later */}
@@ -45,6 +46,8 @@ const ChatMessageBox = props => {
           </div>
         )}
       </div>
+
+      {message?.reply_type && <ChatReplyMessage messageData={message} {...props} />}
 
       {message?.message_type === 'text' && <ChatTextMesage messageData={message} {...props} />}
       {message?.message_type === 'photo' && <ChatImageMessage messageData={message} {...props} />}

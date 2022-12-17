@@ -4,7 +4,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
-import { GetRole, showThreeDotsInDisplayName } from '../ChatUtils/chatUtils'
+import { GetRole, showThreeDotsAfterNText } from '../ChatUtils/chatUtils'
 import { checkForBlockEmail } from '../ChatUtils/chatUtils'
 import TagFacesIcon from '@mui/icons-material/TagFaces'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined'
@@ -71,7 +71,7 @@ const ChatInput = props => {
 
   //       //anon joined the chat messages after updating user json
   //       if (userEmail?.startsWith("anon_") && !userData?.displayName) {
-  //         let anonMessageText = `${showThreeDotsInDisplayName(
+  //         let anonMessageText = `${showThreeDotsAfterNText(
   //           displayNameInput.trim()
   //         )} joined the chat`;
 
@@ -117,7 +117,7 @@ const ChatInput = props => {
   // };
 
   return (
-    <div className='RCChat-Input-Container RCInput-checkbox bottomShadow'>
+    <div className='RCChat-Input-Container RCInput-checkbox'>
       {userData?.displayName ? (
         <>
           <TextField
@@ -134,9 +134,9 @@ const ChatInput = props => {
                 ? t('preview.admin_blocked')
                 : isHostAndPrimaryHost(localStorage.getItem('user-email'))
                 ? hostChatAsBrand && hostChatAsBrand[loggedInEmail]
-                  ? `Chat as ${showThreeDotsInDisplayName(sessionStorage.getItem('ORGNAME'))}`
-                  : `Chat as ${showThreeDotsInDisplayName(userData?.displayName)}`
-                : `Chat as ${showThreeDotsInDisplayName(userData?.displayName)}`
+                  ? `Chat as ${showThreeDotsAfterNText(sessionStorage.getItem('ORGNAME'), 12)}`
+                  : `Chat as ${showThreeDotsAfterNText(userData?.displayName, 12)}`
+                : `Chat as ${showThreeDotsAfterNText(userData?.displayName, 12)}`
             }
             multiline
             onChange={e => {
