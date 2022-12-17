@@ -49,9 +49,8 @@ var ChatInput = function (props) {
         return (GetRole((_a = customisedEvents[eventID]) === null || _a === void 0 ? void 0 : _a.permissions, email) === 'v2_host' ||
             GetRole((_b = customisedEvents[eventID]) === null || _b === void 0 ? void 0 : _b.permissions, email) === 'v2_primary_host');
     };
-    return (_jsx("div", __assign({ className: 'RCChat-Input-Container' }, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
+    return (_jsx("div", __assign({ className: 'RCChat-Input-Container RCInput-checkbox bottomShadow' }, { children: (userData === null || userData === void 0 ? void 0 : userData.displayName) ? (_jsxs(_Fragment, { children: [_jsx(TextField, { style: {
                         width: '100%',
-                        backgroundColor: 'white',
                         padding: '6px 0px',
                         paddingBottom: maxLimitExceeds ? '0px' : '8px',
                         transition: 'all 0.5s',

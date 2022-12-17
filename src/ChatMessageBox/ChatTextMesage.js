@@ -59,12 +59,11 @@ const ChatTextMesage = props => {
         })
         .catch(err => {
           setIsLinkInMessage(false)
-          console.error(err)
-          console.error('No metaData could be found for the given URL.', err)
+          console.error('++++No metaData could be found for the given URL.', err)
           setmetaData({})
         })
     }
-  })
+  }, [])
 
   const openLink = () => {
     window.open(redirectUrl, '_blank')
@@ -139,62 +138,40 @@ const ChatTextMesage = props => {
 
             <div className='SiteDetails'>
               {metaData?.siteName && (
-                <div>
+                <>
                   <span style={{ marginRight: '6px' }}>
                     <LinkIcon />
                   </span>
                   <span className='link-preview-link'>
                     <b>{metaData?.siteName}</b>
                   </span>
-                </div>
+                </>
               )}
             </div>
           </div>
         </div>
       )}
 
-      <div className='lower MuiTypography-body2' style={isLinkInMessage == false ? { marginTop: '0px' } : {}}>
-        <div className='MuiTypography-subtitle2'>
-          {newLineHandler(message?.message_text)?.map(elem => {
-            return (
-              <div>
-                {elem?.split(' ').map(s => {
-                  return (
-                    <>
-                      {isUrl(s) ? (
-                        <a
-                          onClick={openLink}
-                          className='MuiTypography-subtitle2'
-                          style={{
-                            cursor: 'pointer',
-                            textDecoration: 'underline',
-                            color: 'rgba(255, 255, 255, .7)',
-                          }}
-                        >
-                          {s}&nbsp;
-                        </a>
-                      ) : (
-                        <>
-                          {s != '' && (
-                            <p
-                              className='MuiTypography-subtitle2'
-                              style={{
-                                display: 'inline-block',
-                                margin: '0px 0px',
-                              }}
-                            >
-                              {s}&nbsp;
-                            </p>
-                          )}
-                        </>
-                      )}
-                    </>
-                  )
-                })}
-              </div>
-            )
-          })}
-        </div>
+      <div className='MuiTypography-subtitle2 text-message-div'>
+        {newLineHandler(message?.message_text)?.map(elem => {
+          return (
+            <>
+              {elem?.split(' ').map(s => {
+                return (
+                  <>
+                    {isUrl(s) ? (
+                      <a onClick={openLink} className='text-message-link'>
+                        {s}&nbsp;
+                      </a>
+                    ) : (
+                      <>{s != '' && <p className='MuiTypography-subtitle2 text-message-content'>{s}&nbsp;</p>}</>
+                    )}
+                  </>
+                )
+              })}
+            </>
+          )
+        })}
       </div>
     </div>
   )

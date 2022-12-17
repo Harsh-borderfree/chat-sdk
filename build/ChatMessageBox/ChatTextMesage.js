@@ -9,7 +9,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useEffect, useState } from 'react';
 import { isUrl, newLineHandler } from '../ChatUtils/chatUtils';
 import LinkIcon from '@mui/icons-material/Link';
@@ -68,12 +68,11 @@ var ChatTextMesage = function (props) {
             })
                 .catch(function (err) {
                 setIsLinkInMessage(false);
-                console.error(err);
-                console.error('No metaData could be found for the given URL.', err);
+                console.error('++++No metaData could be found for the given URL.', err);
                 setmetaData({});
             });
         }
-    });
+    }, []);
     var openLink = function () {
         window.open(redirectUrl, '_blank');
     };
@@ -104,17 +103,10 @@ var ChatTextMesage = function (props) {
                                             ? ((_g = metaData === null || metaData === void 0 ? void 0 : metaData.description) === null || _g === void 0 ? void 0 : _g.length) > descriptionLength * 2
                                                 ? (metaData === null || metaData === void 0 ? void 0 : metaData.description.slice(0, descriptionLength * 2)) + '...'
                                                 : metaData === null || metaData === void 0 ? void 0 : metaData.description
-                                            : metaData === null || metaData === void 0 ? void 0 : metaData.description }))) })), _jsx("div", __assign({ className: 'SiteDetails' }, { children: (metaData === null || metaData === void 0 ? void 0 : metaData.siteName) && (_jsxs("div", { children: [_jsx("span", __assign({ style: { marginRight: '6px' } }, { children: _jsx(LinkIcon, {}) })), _jsx("span", __assign({ className: 'link-preview-link' }, { children: _jsx("b", { children: metaData === null || metaData === void 0 ? void 0 : metaData.siteName }) }))] })) }))] }))] }))), _jsx("div", __assign({ className: 'lower MuiTypography-body2', style: isLinkInMessage == false ? { marginTop: '0px' } : {} }, { children: _jsx("div", __assign({ className: 'MuiTypography-subtitle2' }, { children: (_h = newLineHandler(message === null || message === void 0 ? void 0 : message.message_text)) === null || _h === void 0 ? void 0 : _h.map(function (elem) {
-                        return (_jsx("div", { children: elem === null || elem === void 0 ? void 0 : elem.split(' ').map(function (s) {
-                                return (_jsx(_Fragment, { children: isUrl(s) ? (_jsxs("a", __assign({ onClick: openLink, className: 'MuiTypography-subtitle2', style: {
-                                            cursor: 'pointer',
-                                            textDecoration: 'underline',
-                                            color: 'rgba(255, 255, 255, .7)',
-                                        } }, { children: [s, "\u00A0"] }))) : (_jsx(_Fragment, { children: s != '' && (_jsxs("p", __assign({ className: 'MuiTypography-subtitle2', style: {
-                                                display: 'inline-block',
-                                                margin: '0px 0px',
-                                            } }, { children: [s, "\u00A0"] }))) })) }));
-                            }) }));
-                    }) })) }))] })));
+                                            : metaData === null || metaData === void 0 ? void 0 : metaData.description }))) })), _jsx("div", __assign({ className: 'SiteDetails' }, { children: (metaData === null || metaData === void 0 ? void 0 : metaData.siteName) && (_jsxs(_Fragment, { children: [_jsx("span", __assign({ style: { marginRight: '6px' } }, { children: _jsx(LinkIcon, {}) })), _jsx("span", __assign({ className: 'link-preview-link' }, { children: _jsx("b", { children: metaData === null || metaData === void 0 ? void 0 : metaData.siteName }) }))] })) }))] }))] }))), _jsx("div", __assign({ className: 'MuiTypography-subtitle2 text-message-div' }, { children: (_h = newLineHandler(message === null || message === void 0 ? void 0 : message.message_text)) === null || _h === void 0 ? void 0 : _h.map(function (elem) {
+                    return (_jsx(_Fragment, { children: elem === null || elem === void 0 ? void 0 : elem.split(' ').map(function (s) {
+                            return (_jsx(_Fragment, { children: isUrl(s) ? (_jsxs("a", __assign({ onClick: openLink, className: 'text-message-link' }, { children: [s, "\u00A0"] }))) : (_jsx(_Fragment, { children: s != '' && _jsxs("p", __assign({ className: 'MuiTypography-subtitle2 text-message-content' }, { children: [s, "\u00A0"] })) })) }));
+                        }) }));
+                }) }))] })));
 };
 export default ChatTextMesage;

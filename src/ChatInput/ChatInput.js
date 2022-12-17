@@ -117,13 +117,12 @@ const ChatInput = props => {
   // };
 
   return (
-    <div className='RCChat-Input-Container'>
+    <div className='RCChat-Input-Container RCInput-checkbox bottomShadow'>
       {userData?.displayName ? (
         <>
           <TextField
             style={{
               width: '100%',
-              backgroundColor: 'white',
               padding: '6px 0px',
               paddingBottom: maxLimitExceeds ? '0px' : '8px',
               transition: 'all 0.5s',

@@ -25,7 +25,6 @@ import { Typography, Box, ListItem, IconButton } from '@mui/material';
 import ChatInput from '../ChatInput/ChatInput';
 import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
-import './ChatComponents.css';
 import ChatMessageList from '../ChatMessageList/ChatMessageList';
 import { CircularProgress } from '@mui/material';
 var ChatComponents = function (props) {
@@ -54,7 +53,7 @@ var ChatComponents = function (props) {
             }
         }
     }, [allChatMessages, allReplayMessages]);
-    return (_jsx(_Fragment, { children: _jsxs("div", __assign({ className: 'RCChat-conatainer' }, { children: [_jsxs("div", __assign({ className: 'RCChat-title-div' }, { children: [_jsx(Typography, __assign({ variant: 'h6' }, { children: t('preview.chat') })), _jsx(IconButton, __assign({ className: 'RCChat-title-close-iconbutton', xid: '4M', onClick: function () {
+    return (_jsx(_Fragment, { children: _jsxs("div", __assign({ className: 'RCChat-container' }, { children: [_jsxs("div", __assign({ className: 'RCChat-title-div topShadow' }, { children: [_jsx(Typography, __assign({ variant: 'h6' }, { children: t('preview.chat') })), _jsx(IconButton, __assign({ className: 'RCChat-title-close-iconbutton', xid: '4M', onClick: function () {
                                 props === null || props === void 0 ? void 0 : props.setCurrentComponent('RCProductsPanel');
                             }, size: 'large' }, { children: _jsx(CloseIcon, { className: 'RCChat-title-close-icon' }) }))] })), _jsxs("div", __assign({ className: 'RCChat-content-container' }, { children: [isChatLoading ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: _jsx(CircularProgress, {}) }))) : !isChatLoading && allChatMessages.length === 0 ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: "NO Messages" }))) : (_jsx(ChatMessageList, __assign({ chatMessageList: chatMessageList }, props))), _jsx(ChatInput, __assign({}, props))] }))] })) }));
 };

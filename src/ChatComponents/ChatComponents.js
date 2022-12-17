@@ -4,7 +4,6 @@ import { Typography, Box, ListItem, IconButton } from '@mui/material'
 import ChatInput from '../ChatInput/ChatInput'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
-import './ChatComponents.css'
 import ChatMessageList from '../ChatMessageList/ChatMessageList'
 import { CircularProgress } from '@mui/material'
 
@@ -46,8 +45,8 @@ const ChatComponents = props => {
 
   return (
     <>
-      <div className='RCChat-conatainer'>
-        <div className='RCChat-title-div'>
+      <div className='RCChat-container'>
+        <div className='RCChat-title-div topShadow'>
           <Typography variant='h6'>{t('preview.chat')}</Typography>
           <IconButton
             className='RCChat-title-close-iconbutton'
