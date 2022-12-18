@@ -22,7 +22,7 @@ var ChatMessageList = function (props) {
     if (bottomInputElement) {
         bottomInputHeight = (_a = bottomInputElement[0]) === null || _a === void 0 ? void 0 : _a.clientHeight;
     }
-    return (_jsx(_Fragment, { children: _jsx("div", __assign({ className: 'Chat-message-list-container', style: { height: "calc(100% - ".concat(bottomInputHeight, "px)") } }, { children: messagesList.map(function (message) {
+    return (_jsx(_Fragment, { children: _jsx("div", __assign({ className: 'Chat-message-list-container' }, { children: messagesList.map(function (message) {
                 var _a, _b;
                 if (((_a = message === null || message === void 0 ? void 0 : message.sender_id) === null || _a === void 0 ? void 0 : _a.includes('anon_')) &&
                     ((_b = message === null || message === void 0 ? void 0 : message.message_text) === null || _b === void 0 ? void 0 : _b.includes('joined the chat')) &&

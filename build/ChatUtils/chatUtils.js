@@ -14,6 +14,57 @@ export var showThreeDotsAfterNText = function (str, N) {
     }
     return str;
 };
+var regex = {
+    userName: /[`!@#$%^&*()+=[\]{};':"\\|,<>/?~]/,
+    userEmail: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    phoneNumber: /^(\+\d{1,3}[- ]?)?\d{10}$/,
+};
+var errorHelperText = {
+    userName: 'settings_panel.valid_name',
+    userEmail: 'rsvp.email_error',
+    phoneNumber: 'rsvp.phone_error',
+    emptyField: 'rsvp.emptyfield_error',
+    maxCharLimit: 'rsvp.max_char_limit',
+};
+export var uuidv4 = function () {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var r = (Math.random() * 16) | 0, v = c == 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
+};
+export var handleDisplayName = function (text, name, t) {
+    var showHelperText = false;
+    var helperText = '';
+    if ((text === null || text === void 0 ? void 0 : text.length) > 70) {
+        return {
+            name: name,
+            showHelperText: true,
+            helperText: t(errorHelperText.maxCharLimit),
+        };
+    }
+    if ((text === null || text === void 0 ? void 0 : text.length) === 0)
+        return {
+            name: text,
+            showHelperText: true,
+            helperText: t(errorHelperText.emptyField),
+        };
+    if (!name && text === ' ') {
+        return { name: '', showHelperText: showHelperText, helperText: helperText };
+    }
+    if (regex['userName'].test(text)) {
+        showHelperText = true;
+        return { name: name, showHelperText: showHelperText, helperText: t(errorHelperText.userName) };
+    }
+    else {
+        showHelperText = false;
+    }
+    var lastLetter = text[(text === null || text === void 0 ? void 0 : text.length) - 1];
+    var secondLastLetter = text[(text === null || text === void 0 ? void 0 : text.length) - 2];
+    if (lastLetter === ' ' && secondLastLetter === ' ') {
+        return { name: name, showHelperText: showHelperText, helperText: helperText };
+    }
+    return { name: text, showHelperText: showHelperText, helperText: helperText };
+};
 export var checkForBlockEmail = function (userEmail, currentEvent) {
     var _a, _b, _c;
     var alreadyBlockedEmail = ((_b = (_a = currentEvent === null || currentEvent === void 0 ? void 0 : currentEvent.chat_info) === null || _a === void 0 ? void 0 : _a.blocked_Email) === null || _b === void 0 ? void 0 : _b.length) > 0 ? __spreadArray([], (_c = currentEvent === null || currentEvent === void 0 ? void 0 : currentEvent.chat_info) === null || _c === void 0 ? void 0 : _c.blocked_Email, true) : [];

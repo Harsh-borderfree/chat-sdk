@@ -38,7 +38,7 @@ const ChatComponents = props => {
         setChatMessageList(tempMessageList)
       } else {
         tempMessageList = [...allChatMessages]
-        tempMessageList = tempMessageList.reverse()
+        // tempMessageList = tempMessageList.reverse()
         setChatMessageList(tempMessageList)
       }
     }
@@ -46,7 +46,7 @@ const ChatComponents = props => {
 
   return (
     <>
-      <div className={`RCChat-container ${userRole}`}>
+      <div className={`chat-elements-box RCChat-container ${userRole}`}>
         <div className='RCChat-title-div'>
           <Typography variant='h6'>{t('preview.chat')}</Typography>
           <IconButton
@@ -61,7 +61,7 @@ const ChatComponents = props => {
           </IconButton>
         </div>
 
-        <div className='RCChat-content-container'>
+        <div className='RCChat-content-container' id='RCChat-OuterDiv'>
           {isChatLoading ? (
             <div className='chat-loading'>
               <CircularProgress />
@@ -71,8 +71,8 @@ const ChatComponents = props => {
           ) : (
             <ChatMessageList chatMessageList={chatMessageList} {...props} />
           )}
-          <ChatInput {...props} />
         </div>
+        <ChatInput {...props} />
       </div>
     </>
   )

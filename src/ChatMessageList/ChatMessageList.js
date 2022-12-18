@@ -14,7 +14,7 @@ const ChatMessageList = props => {
 
   return (
     <>
-      <div className='Chat-message-list-container' style={{ height: `calc(100% - ${bottomInputHeight}px)` }}>
+      <div className='Chat-message-list-container'>
         {messagesList.map(message => {
           // For anon joined the chat message
           if (
