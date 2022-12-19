@@ -52,9 +52,9 @@ const ChatComponents = props => {
           <IconButton
             className='RCChat-title-close-iconbutton'
             xid='4M'
-            onClick={() => {
-              props?.setCurrentComponent('RCProductsPanel')
-            }}
+            // onClick={() => {
+            //   props?.setCurrentComponent('RCProductsPanel')
+            // }}
             size='large'
           >
             <CloseIcon className='RCChat-title-close-icon' />

@@ -1,17 +1,32 @@
-import { Button, IconButton, TextField, CircularProgress, Tooltip, Card, Paper, Typography } from '@mui/material'
+import {
+  Button,
+  IconButton,
+  TextField,
+  CircularProgress,
+  Tooltip,
+  Paper,
+  Typography,
+  FormControlLabel,
+  FormControl,
+  RadioGroup,
+  Radio,
+} from '@mui/material'
 import GraphemeSplitter from 'grapheme-splitter'
+import { Picker } from 'emoji-mart'
+import 'emoji-mart/css/emoji-mart.css'
 import CloseIcon from '@mui/icons-material/Close'
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, createRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux'
 import { GetRole, showThreeDotsAfterNText, uuidv4, handleDisplayName, checkForBlockEmail } from '../ChatUtils/chatUtils'
-
+import ChatToolTipDesc from './ChatToolTipDesc'
 import TagFacesIcon from '@mui/icons-material/TagFaces'
 import VideoCallOutlinedIcon from '@mui/icons-material/VideoCallOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import SettingsIcon from '@mui/icons-material/Settings'
 
 const ChatInput = props => {
+  let inputRef = createRef()
   const [maxLimitExceeds, setMaxLimitExceeds] = useState(false)
   const EventPermission = useSelector(state => state.permission)
   const splitter = new GraphemeSplitter()
@@ -25,18 +40,22 @@ const ChatInput = props => {
   const allReduxHostChatAsBrand = useSelector(state => state?.chat?.hostChatAsBrand)
   const permissions = EventPermission?.event_permission[eventID]?.permission
   const loggedInEmail = localStorage.getItem('user-email')
+
   const userData = useSelector(state => state?.userdata?.userData)
   const hostChatAsBrand = allReduxHostChatAsBrand && allReduxHostChatAsBrand[eventID] ? allReduxHostChatAsBrand[eventID] : {}
-  const countTextfieldLines = e => {
-    let lineHeight = e.target.clientHeight
-    setTextfieldLineHeight(lineHeight)
-  }
   const [displayNameBox, setDisplayNameBox] = useState(false)
-  const [displayName, setDisplayName] = useState('')
+  const [displayName, setDisplayName] = useState(userData?.displayName ? userData?.displayName : '')
   const [showHelperText, setShowHelperText] = useState('')
   const [updatingDisplayName, setUpdatingDisplayName] = useState(false)
   const [userEmail, setUserEmail] = useState('')
   const [editDisplayNameBox, setEditDisplayNameBox] = useState(false)
+  const [selectedChatTitle, setSelectedChatTitle] = useState(
+    hostChatAsBrand && hostChatAsBrand[loggedInEmail] ? sessionStorage.getItem('ORGNAME') : userData?.displayName
+  )
+  const [showChangeChatTitleBox, setShowChangeChatTitleBox] = useState(false)
+  const [showReplyBox, setShowReplyBox] = useState(false)
+  const userRole = EventPermission?.event_permission[eventID]?.event_role
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
   // Utils function
   const isHostAndPrimaryHost = email => {
@@ -44,6 +63,11 @@ const ChatInput = props => {
       GetRole(customisedEvents[eventID]?.permissions, email) === 'v2_host' ||
       GetRole(customisedEvents[eventID]?.permissions, email) === 'v2_primary_host'
     )
+  }
+
+  const countTextfieldLines = e => {
+    let lineHeight = e.target.clientHeight
+    setTextfieldLineHeight(lineHeight)
   }
 
   useEffect(() => {
@@ -134,6 +158,134 @@ const ChatInput = props => {
         console.log('error during updating displayname', e)
       }
     )
+  }
+
+  // Send Chat Function
+  const sendChat = () => {
+    setShowEmojiPicker(false)
+    let message = inputMessage.trim()
+    setInputMessage('')
+    //req body for user type consumer
+    let senderUserReqBody = {
+      message_text: message,
+      sender_id: userEmail,
+      sender_name: userData?.displayName ?? deciderSenderId(userEmail),
+      user_type: 'consumer',
+      push_time: new Date().getTime(),
+      status: 'added',
+      msg_id: uuidv4(),
+      has_preview: false,
+      group_id: `${groupID}_${eventID}_L0`,
+      message_type: 'text',
+    }
+    let senderAdminReqBody = {
+      message_text: message,
+      sender_id: userEmail,
+      user_type: 'admin',
+      push_time: new Date().getTime(),
+      msg_id: uuidv4(),
+      role: 'creator',
+      sender_name: hostChatAsBrand && hostChatAsBrand[loggedInEmail] ? sessionStorage.getItem('ORGNAME') : userData?.displayName,
+      status: 'added',
+      has_preview: false,
+      group_id: `${groupID}_${eventID}_L0`,
+      message_type: 'text',
+    }
+
+    if (!isAllowed(permissions, Permissions.chat_admin_msg_unpin.index)) {
+      global.sdk.SendChatMsgToAdmin(
+        {
+          streamID: eventID,
+          groupID: groupID,
+
+          data: {
+            function: 'chat',
+            requestMsg: !showReplyBox
+              ? senderUserReqBody
+              : {
+                  ...senderUserReqBody,
+                  ...{
+                    reply_to_message: replyMessageData?.text,
+                    reply_to_user: replyMessageData?.title,
+                    reply_type: replyMessageData?.sender_type,
+                  },
+                },
+          },
+        },
+        res => {
+          console.log('SEND CHAT SUUUUU 214', res)
+          setShowReplyBox(false)
+        },
+
+        err => {
+          console.log(err, 'error in sending messages')
+        }
+      )
+    } else {
+      global.sdk.SendChatMsgToConsumer(
+        {
+          streamID: eventID,
+          groupID: groupID,
+
+          data: {
+            function: 'chat',
+            //req body for user type admin
+            requestMsg: !showReplyBox
+              ? senderAdminReqBody
+              : {
+                  ...senderAdminReqBody,
+                  ...{
+                    reply_to_message: replyMessageData.text,
+                    reply_to_user: replyMessageData?.title,
+                    reply_type: replyMessageData.sender_type,
+                  },
+                },
+          },
+        },
+        res => {
+          console.log('SEND CHAT SUUUUU 214', res)
+          setShowReplyBox(false)
+        },
+
+        err => {
+          console.log(err, 'error in sending messages')
+        }
+      )
+    }
+  }
+  const sendChatOnKeyPress = e => {
+    //it triggers by pressing the enter key
+    var key = e.which || e.keyCode
+
+    if (window.innerWidth > 1024)
+      if (e.keyCode === 13 && !e.shiftKey) {
+        //for tablets and laptops
+        if (!maxLimitExceeds) {
+          sendChat()
+          setShowEmojiPicker(false)
+        }
+        e.preventDefault()
+      } else if (e.keyCode === 13 && !e.shiftKey && e.key !== 'Enter') {
+        //for mobiles
+        if (!maxLimitExceeds) {
+          sendChat()
+          setShowEmojiPicker(false)
+        }
+        e.preventDefault()
+      }
+  }
+
+  const updateInputValue = (inputMessage, emoji) => {
+    return inputMessage + emoji
+  }
+
+  const setCaretPosition = (ctrl, pos) => {
+    if (ctrl.setSelectionRange) {
+      ctrl.setSelectionRange(pos, pos)
+    }
+    ctrl.style.caretColor = 'auto'
+    ctrl.blur()
+    ctrl.focus()
   }
 
   const DisplayNameBoxContent = () => (
@@ -229,7 +381,7 @@ const ChatInput = props => {
           }}
           xid='7s'
           onClick={e => {
-            setDisplayNameBox(false)
+            setShowChangeChatTitleBox(false)
           }}
         />
       </div>
@@ -244,9 +396,9 @@ const ChatInput = props => {
         <RadioGroup
           aria-labelledby='demo-controlled-radio-buttons-group'
           name='controlled-radio-buttons-group'
-          value={selectedName}
+          value={selectedChatTitle}
           onChange={e => {
-            setSeletedName(e.target.value)
+            setSelectedChatTitle(e.target.value)
           }}
         >
           <FormControlLabel
@@ -271,7 +423,7 @@ const ChatInput = props => {
                       display: 'inline',
                     }}
                   >
-                    {showThreeDotsInDisplayName(userData?.displayName)}
+                    {showThreeDotsAfterNText(userData?.displayName, 12)}
                   </Typography>
 
                   <Typography
@@ -344,14 +496,14 @@ const ChatInput = props => {
             xid='7t'
             onClick={e => {
               setEditDisplayNameBox(true)
-              setDisplayNameBox(false)
+              setShowChangeChatTitleBox(false)
             }}
           >
             {t('login.edit')}
           </Typography>
           <Tooltip title={<span style={{ width: '80px' }}>{t('login.click_here')}</span>} placement={'top'} arrow>
             <div className='imageDescription-icon'>
-              <ToolTipDesc color={props.textColor} />
+              <ChatToolTipDesc color='#1F498A' />
             </div>
           </Tooltip>
         </div>
@@ -370,23 +522,23 @@ const ChatInput = props => {
           }}
           xid='7u'
           onClick={e => {
-            if (selectedName === sessionStorage.getItem('ORGNAME')) {
+            if (selectedChatTitle === sessionStorage.getItem('ORGNAME')) {
               global.sdk.SetHostChatAsBrand({
-                eventID: event_id,
+                eventID: eventID,
                 email: localStorage.getItem('user-email'),
                 value: true,
               })
             }
 
-            if (selectedName === userData?.displayName) {
+            if (selectedChatTitle === userData?.displayName) {
               global.sdk.SetHostChatAsBrand({
-                eventID: event_id,
+                eventID: eventID,
                 email: localStorage.getItem('user-email'),
                 value: false,
               })
             }
 
-            setDisplayNameBox(false)
+            setShowChangeChatTitleBox(false)
           }}
         >
           {t('login.confirm')}
@@ -395,10 +547,27 @@ const ChatInput = props => {
     </div>
   )
 
+  const EmojiPicker = () => (
+    <Picker
+      style={{ bottom: '0px' }}
+      onSelect={emoji => {
+        if (splitter.splitGraphemes(inputMessage + emoji.native).length > 200) {
+          setMaxLimitExceeds(true)
+        } else {
+          setMaxLimitExceeds(false)
+          let inputMessagePostUserTypesInEmoji = updateInputValue(inputMessage, emoji.native)
+          setInputMessage(inputMessagePostUserTypesInEmoji)
+        }
+      }}
+    />
+  )
+
   return (
     <div className='RCChat-Input-Container RCInput-checkbox'>
       {userData?.displayName ? (
         <>
+          {showEmojiPicker && <EmojiPicker />}
+          {showChangeChatTitleBox && <ChangeChatTitle />}
           {editDisplayNameBox && <DisplayNameBoxContent />}
           <TextField
             style={{
@@ -407,6 +576,7 @@ const ChatInput = props => {
               paddingBottom: maxLimitExceeds ? '0px' : '8px',
               transition: 'all 0.5s',
             }}
+            ref={el => (inputRef = el)}
             className={`${maxLimitExceeds ? 'error-textfield' : 'not-error'} message-textField`}
             id={textfieldLineHeight < 116 ? 'outlined-textarea' : 'outlined-textarea-scroll'}
             placeholder={
@@ -419,15 +589,18 @@ const ChatInput = props => {
                 : `Chat as ${showThreeDotsAfterNText(userData?.displayName, 12)}`
             }
             multiline
+            helperText={maxLimitExceeds ? <span style={{ color: 'red' }}>{t('preview.character_limit_exceeded')}</span> : ''}
+            value={inputMessage}
             onChange={e => {
               if (splitter.splitGraphemes(e.target.value).length > 200) {
                 setMaxLimitExceeds(true)
               } else {
                 setMaxLimitExceeds(false)
+                setInputMessage(e.target.value)
+                countTextfieldLines(e)
               }
-              setInputMessage(e.target.value)
-              countTextfieldLines(e)
             }}
+            onKeyDown={sendChatOnKeyPress}
           />
           <div
             className='button-below-input'
@@ -442,7 +615,7 @@ const ChatInput = props => {
                 className={checkForBlockEmail(loggedInEmail, currentEvent) >= 0 ? 'emojiicon-blocked' : 'emojiicon'}
                 disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
                 xid='4Y'
-                // onClick={() => setDisplayEmojiPicker(!displayEmojiPicker)}
+                onClick={() => setShowEmojiPicker(prev => !prev)}
                 size='large'
               >
                 <TagFacesIcon
@@ -458,11 +631,15 @@ const ChatInput = props => {
                     disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
                     xid='Am'
                     onClick={() => {
-                      setEditDisplayNameBox(prev => !prev)
+                      if (userRole === 'consumer' || userRole === 'v2_1to1_customer') {
+                        setEditDisplayNameBox(prev => !prev)
+                      } else {
+                        setShowChangeChatTitleBox(prev => !prev)
+                      }
                     }}
                     size='large'
                   >
-                    {displayNameBox || editDisplayNameBox ? (
+                    {displayNameBox || editDisplayNameBox || showChangeChatTitleBox ? (
                       <SettingsIcon
                         style={{
                           cursor: 'pointer',
@@ -527,7 +704,11 @@ const ChatInput = props => {
               className={checkForBlockEmail(loggedInEmail, currentEvent) >= 0 ? 'sendicon-blocked' : 'sendicon'}
               disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
               xid='4Z'
-              // onClick={!helperText ? sendChat : undefined}
+              onClick={() => {
+                if (!maxLimitExceeds) {
+                  sendChat()
+                }
+              }}
             >
               {t('login.Send')}
             </Button>

@@ -24,7 +24,7 @@ const ChatMessageList = props => {
           ) {
             return (
               <>
-                <AnonChatMessageBox messageData={message} />
+                <AnonChatMessageBox messageData={message} key={message?.id} />
               </>
             )
           }
@@ -32,7 +32,7 @@ const ChatMessageList = props => {
           else {
             return (
               <>
-                <ChatMessageBox messageData={message} {...props} />
+                <ChatMessageBox messageData={message} {...props} key={message?.id} />
               </>
             )
           }

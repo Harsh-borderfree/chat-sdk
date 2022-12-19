@@ -76,19 +76,13 @@ const ChatTextMesage = props => {
         {newLineHandler(message?.message_text)?.map(elem => {
           return (
             <>
-              {elem?.split(' ').map(s => {
-                return (
-                  <>
-                    {isUrl(s) ? (
-                      <a onClick={openLink} className='text-message-link'>
-                        {s}&nbsp;
-                      </a>
-                    ) : (
-                      <>{s != '' && <p className='MuiTypography-subtitle2 text-message-content'>{s}&nbsp;</p>}</>
-                    )}
-                  </>
-                )
-              })}
+              {isUrl(elem) ? (
+                <a onClick={openLink} className='text-message-link'>
+                  {elem}
+                </a>
+              ) : (
+                <>{elem != '' && <p className='MuiTypography-subtitle2 text-message-content'>{elem}</p>}</>
+              )}
             </>
           )
         })}

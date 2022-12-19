@@ -9,6 +9,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+import { createElement as _createElement } from "react";
 import { jsx as _jsx, Fragment as _Fragment } from "react/jsx-runtime";
 import React, { useState } from 'react';
 import AnonChatMessageBox from '../AnonChatMessageBox/AnonChatMessageBox';
@@ -27,10 +28,10 @@ var ChatMessageList = function (props) {
                 if (((_a = message === null || message === void 0 ? void 0 : message.sender_id) === null || _a === void 0 ? void 0 : _a.includes('anon_')) &&
                     ((_b = message === null || message === void 0 ? void 0 : message.message_text) === null || _b === void 0 ? void 0 : _b.includes('joined the chat')) &&
                     !(message === null || message === void 0 ? void 0 : message.sender_name)) {
-                    return (_jsx(_Fragment, { children: _jsx(AnonChatMessageBox, { messageData: message }) }));
+                    return (_jsx(_Fragment, { children: _jsx(AnonChatMessageBox, { messageData: message }, message === null || message === void 0 ? void 0 : message.id) }));
                 }
                 else {
-                    return (_jsx(_Fragment, { children: _jsx(ChatMessageBox, __assign({ messageData: message }, props)) }));
+                    return (_jsx(_Fragment, { children: _createElement(ChatMessageBox, __assign({ messageData: message }, props, { key: message === null || message === void 0 ? void 0 : message.id })) }));
                 }
             }) })) }));
 };

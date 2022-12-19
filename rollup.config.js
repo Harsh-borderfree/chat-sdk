@@ -5,6 +5,7 @@ import postcss from 'rollup-plugin-postcss'
 import { terser } from 'rollup-plugin-terser'
 import commonjs from '@rollup/plugin-commonjs'
 import path from 'path'
+import json from '@rollup/plugin-json'
 
 export default [
   {
@@ -31,6 +32,7 @@ export default [
         presets: ['@babel/preset-react'],
       }),
       commonjs(),
+      json(),
       external(),
       resolve(),
       terser(),

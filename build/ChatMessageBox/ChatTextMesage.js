@@ -9,7 +9,7 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-import { jsx as _jsx, jsxs as _jsxs, Fragment as _Fragment } from "react/jsx-runtime";
+import { jsx as _jsx, Fragment as _Fragment, jsxs as _jsxs } from "react/jsx-runtime";
 import React, { useEffect, useState } from 'react';
 import { isUrl, newLineHandler } from '../ChatUtils/chatUtils';
 import ChatLinkMessages from './ChatLinkMessages';
@@ -75,9 +75,7 @@ var ChatTextMesage = function (props) {
         window.open(redirectUrl, '_blank');
     };
     return (_jsxs("div", __assign({ className: 'box' }, { children: [isLinkInMessage && metaData && _jsx(ChatLinkMessages, { metaData: metaData, openLink: openLink }), _jsx("div", __assign({ className: 'MuiTypography-subtitle2 text-message-div' }, { children: (_a = newLineHandler(message === null || message === void 0 ? void 0 : message.message_text)) === null || _a === void 0 ? void 0 : _a.map(function (elem) {
-                    return (_jsx(_Fragment, { children: elem === null || elem === void 0 ? void 0 : elem.split(' ').map(function (s) {
-                            return (_jsx(_Fragment, { children: isUrl(s) ? (_jsxs("a", __assign({ onClick: openLink, className: 'text-message-link' }, { children: [s, "\u00A0"] }))) : (_jsx(_Fragment, { children: s != '' && _jsxs("p", __assign({ className: 'MuiTypography-subtitle2 text-message-content' }, { children: [s, "\u00A0"] })) })) }));
-                        }) }));
+                    return (_jsx(_Fragment, { children: isUrl(elem) ? (_jsx("a", __assign({ onClick: openLink, className: 'text-message-link' }, { children: elem }))) : (_jsx(_Fragment, { children: elem != '' && _jsx("p", __assign({ className: 'MuiTypography-subtitle2 text-message-content' }, { children: elem })) })) }));
                 }) }))] })));
 };
 export default ChatTextMesage;
