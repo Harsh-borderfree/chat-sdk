@@ -27,8 +27,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useTranslation } from 'react-i18next';
 import ChatMessageList from '../ChatMessageList/ChatMessageList';
 import { CircularProgress } from '@mui/material';
+import ChatPinnedMessage from '../ChatPinnedMessage/ChatPinnedMessage';
 var ChatComponents = function (props) {
-    var _a;
+    var _a, _b, _c;
     var eventID = props.eventID, groupID = props.groupID, isChatLoading = props.isChatLoading;
     var allReduxMessages = useSelector(function (state) { var _a; return (_a = state === null || state === void 0 ? void 0 : state.chat) === null || _a === void 0 ? void 0 : _a.allMessages; });
     var allChatMessages = allReduxMessages[eventID] || [];
@@ -36,11 +37,12 @@ var ChatComponents = function (props) {
     var userRole = (_a = EventPermission === null || EventPermission === void 0 ? void 0 : EventPermission.event_permission[eventID]) === null || _a === void 0 ? void 0 : _a.event_role;
     var replayMessages = useSelector(function (state) { var _a; return (_a = state === null || state === void 0 ? void 0 : state.chat) === null || _a === void 0 ? void 0 : _a.replayMessages; });
     var allReplayMessages = replayMessages ? replayMessages[eventID] : [];
-    var _b = useState([]), chatMessageList = _b[0], setChatMessageList = _b[1];
+    var _d = useState([]), chatMessageList = _d[0], setChatMessageList = _d[1];
     var eventsState = useSelector(function (state) { return state.events; });
     var streamEvents = eventsState.streamEvents, customisedEvents = eventsState.customisedEvents;
     var currentEvent = customisedEvents[eventID];
     var t = useTranslation().t;
+    var adminPinnedMessages = ((_b = currentEvent === null || currentEvent === void 0 ? void 0 : currentEvent.chat_info) === null || _b === void 0 ? void 0 : _b.pinned_message) ? __spreadArray([], (_c = currentEvent === null || currentEvent === void 0 ? void 0 : currentEvent.chat_info) === null || _c === void 0 ? void 0 : _c.pinned_message, true) : [];
     useEffect(function () {
         if (allChatMessages.length > 0 || allReplayMessages.length > 0) {
             var isRecordedVideoPlaying = currentEvent.status == 'streaming_done' && global.mem.current.event.isRecordedVideoPlaying == true;
@@ -55,6 +57,10 @@ var ChatComponents = function (props) {
             }
         }
     }, [allChatMessages, allReplayMessages]);
-    return (_jsx(_Fragment, { children: _jsxs("div", __assign({ className: "chat-elements-box RCChat-container ".concat(userRole) }, { children: [_jsxs("div", __assign({ className: 'RCChat-title-div' }, { children: [_jsx(Typography, __assign({ variant: 'h6' }, { children: t('preview.chat') })), _jsx(IconButton, __assign({ className: 'RCChat-title-close-iconbutton', xid: '4M', size: 'large' }, { children: _jsx(CloseIcon, { className: 'RCChat-title-close-icon' }) }))] })), _jsx("div", __assign({ className: 'RCChat-content-container', id: 'RCChat-OuterDiv' }, { children: isChatLoading ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: _jsx(CircularProgress, {}) }))) : !isChatLoading && allChatMessages.length === 0 ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: "NO Messages" }))) : (_jsx(ChatMessageList, __assign({ chatMessageList: chatMessageList }, props))) })), _jsx(ChatInput, __assign({}, props))] })) }));
+    return (_jsx(_Fragment, { children: _jsxs("div", __assign({ className: "chat-elements-box RCChat-container ".concat(userRole) }, { children: [_jsxs("div", __assign({ className: 'RCChat-title-div' }, { children: [_jsx(Typography, __assign({ variant: 'h6' }, { children: t('preview.chat') })), _jsx(IconButton, __assign({ className: 'RCChat-title-close-iconbutton', xid: '4M', size: 'large' }, { children: _jsx(CloseIcon, { className: 'RCChat-title-close-icon' }) }))] })), adminPinnedMessages &&
+                    (adminPinnedMessages === null || adminPinnedMessages === void 0 ? void 0 : adminPinnedMessages.length) > 0 &&
+                    (adminPinnedMessages === null || adminPinnedMessages === void 0 ? void 0 : adminPinnedMessages.map(function (message) {
+                        return (_jsx("div", __assign({ className: 'pin-msg-box' }, { children: _jsx(ChatPinnedMessage, __assign({ messageData: message }, props)) }), message.pin_id));
+                    })), _jsx("div", __assign({ className: 'RCChat-content-container', id: 'RCChat-OuterDiv' }, { children: isChatLoading ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: _jsx(CircularProgress, {}) }))) : !isChatLoading && allChatMessages.length === 0 ? (_jsx("div", __assign({ className: 'chat-loading' }, { children: "NO Messages" }))) : (_jsx(ChatMessageList, __assign({ chatMessageList: chatMessageList }, props))) })), _jsx(ChatInput, __assign({}, props))] })) }));
 };
 export default ChatComponents;

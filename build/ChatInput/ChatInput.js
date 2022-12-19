@@ -372,9 +372,14 @@ var ChatInput = function (props) {
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                    } }, { children: [_jsxs("div", __assign({ style: { display: 'flex', alignItems: 'center' } }, { children: [_jsx(IconButton, __assign({ className: checkForBlockEmail(loggedInEmail, currentEvent) >= 0 ? 'emojiicon-blocked' : 'emojiicon', disabled: checkForBlockEmail(loggedInEmail, currentEvent) >= 0, xid: '4Y', onClick: function () { return setShowEmojiPicker(function (prev) { return !prev; }); }, size: 'large' }, { children: _jsx(TagFacesIcon, { style: {
+                    } }, { children: [_jsxs("div", __assign({ style: { display: 'flex', alignItems: 'center' } }, { children: [_jsx(IconButton, __assign({ className: checkForBlockEmail(loggedInEmail, currentEvent) >= 0 ? 'emojiicon-blocked' : 'emojiicon', disabled: checkForBlockEmail(loggedInEmail, currentEvent) >= 0, xid: '4Y', onClick: function () {
+                                        setEditDisplayNameBox(false);
+                                        setShowChangeChatTitleBox(false);
+                                        setShowEmojiPicker(function (prev) { return !prev; });
+                                    }, size: 'large' }, { children: _jsx(TagFacesIcon, { style: {
                                             color: '#404040',
                                         } }) })), isAllowed(permissions, Permissions.show_changeName_icon.index) && (_jsx(Tooltip, __assign({ title: _jsx("span", __assign({ style: { width: '70px' } }, { children: t('login.can_changes') })), placement: 'top', arrow: true }, { children: _jsx(IconButton, __assign({ className: checkForBlockEmail(loggedInEmail, currentEvent) >= 0 ? 'emojiicon-blocked' : 'emojiicon', disabled: checkForBlockEmail(loggedInEmail, currentEvent) >= 0, xid: 'Am', onClick: function () {
+                                            setShowEmojiPicker(false);
                                             if (userRole === 'consumer' || userRole === 'v2_1to1_customer') {
                                                 setEditDisplayNameBox(function (prev) { return !prev; });
                                             }

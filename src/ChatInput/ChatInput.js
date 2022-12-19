@@ -615,7 +615,11 @@ const ChatInput = props => {
                 className={checkForBlockEmail(loggedInEmail, currentEvent) >= 0 ? 'emojiicon-blocked' : 'emojiicon'}
                 disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
                 xid='4Y'
-                onClick={() => setShowEmojiPicker(prev => !prev)}
+                onClick={() => {
+                  setEditDisplayNameBox(false)
+                  setShowChangeChatTitleBox(false)
+                  setShowEmojiPicker(prev => !prev)
+                }}
                 size='large'
               >
                 <TagFacesIcon
@@ -631,6 +635,7 @@ const ChatInput = props => {
                     disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
                     xid='Am'
                     onClick={() => {
+                      setShowEmojiPicker(false)
                       if (userRole === 'consumer' || userRole === 'v2_1to1_customer') {
                         setEditDisplayNameBox(prev => !prev)
                       } else {

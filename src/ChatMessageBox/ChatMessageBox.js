@@ -1,7 +1,4 @@
-import React from 'react'
-import { isUrl } from '../ChatUtils/chatUtils'
 import { useSelector } from 'react-redux'
-import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
 import { Typography } from '@mui/material'
 import { showThreeDotsAfterNText } from '../ChatUtils/chatUtils'
 import BlueTickForBrand from './ChatBlueTickBrand'
@@ -9,11 +6,17 @@ import ChatTextMesage from './ChatTextMesage'
 import ChatImageMessage from './ChatImageMessage'
 import ChatReplyMessage from '../ChatReplyMessage/ChatReplyMessage'
 
+import { useTranslation } from 'react-i18next'
+
+import ChatOptions from './ChatOptions'
+
 const ChatMessageBox = props => {
+  const { t } = useTranslation()
   const message = props?.messageData
   const { isAllowed, Permissions, eventID } = props
   const EventPermission = useSelector(state => state.permission)
   const permissions = EventPermission?.event_permission[eventID]?.permission
+
   return (
     <div className='rce-container-mbox'>
       <div className='rce-mbox-title'>
@@ -40,15 +43,11 @@ const ChatMessageBox = props => {
 
           {message?.sender_name === localStorage.getItem('ORGNAME') && <BlueTickForBrand brandColor='blue' />}
         </div>
-        {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) && (
-          <div className='rce-mbox-title-right' style={{ cursor: 'pointer' }}>
-            <MoreVertOutlinedIcon height='20px' width='20px' />
-          </div>
-        )}
+
+        {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) && <ChatOptions messageData={message} {...props} />}
       </div>
 
       {message?.reply_type && <ChatReplyMessage messageData={message} {...props} />}
-
       {message?.message_type === 'text' && <ChatTextMesage messageData={message} {...props} />}
       {message?.message_type === 'photo' && <ChatImageMessage messageData={message} {...props} />}
     </div>

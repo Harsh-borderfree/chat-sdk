@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { isUrl, newLineHandler } from '../ChatUtils/chatUtils'
+import PinnedLinkMessage from './PinnedLinkMessage'
 
-import ChatLinkMessages from './ChatLinkMessages'
-
-const ChatTextMesage = props => {
+const PinnedTextMessage = props => {
   const message = props?.messageData
   const [metaData, setmetaData] = useState({})
   const [isLinkInMessage, setIsLinkInMessage] = useState(false)
@@ -68,19 +67,17 @@ const ChatTextMesage = props => {
   }
 
   return (
-    <div className='box'>
-      {isLinkInMessage && metaData && <ChatLinkMessages metaData={metaData} openLink={openLink} />}
+    <div>
+      {isLinkInMessage && metaData && <PinnedLinkMessage metaData={metaData} openLink={openLink} />}
 
-      <div className='MuiTypography-subtitle2 text-message-div'>
+      <div className='MuiTypography-subtitle2'>
         {newLineHandler(message?.message_text)?.map(elem => {
           return (
             <>
               {isUrl(elem) ? (
-                <a onClick={openLink} className='text-message-link'>
-                  {elem}
-                </a>
+                <a onClick={openLink}>{elem}</a>
               ) : (
-                <>{elem != '' && <p className='MuiTypography-subtitle2 text-message-content'>{elem}</p>}</>
+                <>{elem != '' && <p className='MuiTypography-subtitle2 '>{elem}</p>}</>
               )}
             </>
           )
@@ -90,4 +87,4 @@ const ChatTextMesage = props => {
   )
 }
 
-export default ChatTextMesage
+export default PinnedTextMessage

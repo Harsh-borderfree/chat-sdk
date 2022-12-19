@@ -6,6 +6,7 @@ import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
 import ChatMessageList from '../ChatMessageList/ChatMessageList'
 import { CircularProgress } from '@mui/material'
+import ChatPinnedMessage from '../ChatPinnedMessage/ChatPinnedMessage'
 
 const ChatComponents = props => {
   const { eventID, groupID, isChatLoading } = props
@@ -15,11 +16,14 @@ const ChatComponents = props => {
   const userRole = EventPermission?.event_permission[eventID]?.event_role
   const replayMessages = useSelector(state => state?.chat?.replayMessages)
   const allReplayMessages = replayMessages ? replayMessages[eventID] : []
+
   const [chatMessageList, setChatMessageList] = useState([])
   const eventsState = useSelector(state => state.events)
   const { streamEvents, customisedEvents } = eventsState
   const currentEvent = customisedEvents[eventID]
   const { t } = useTranslation()
+
+  const adminPinnedMessages = currentEvent?.chat_info?.pinned_message ? [...currentEvent?.chat_info?.pinned_message] : []
 
   //Five Types of messages
   // 1.Normal Messages
@@ -60,6 +64,16 @@ const ChatComponents = props => {
             <CloseIcon className='RCChat-title-close-icon' />
           </IconButton>
         </div>
+
+        {adminPinnedMessages &&
+          adminPinnedMessages?.length > 0 &&
+          adminPinnedMessages?.map(message => {
+            return (
+              <div key={message.pin_id} className='pin-msg-box'>
+                <ChatPinnedMessage messageData={message} {...props} />
+              </div>
+            )
+          })}
 
         <div className='RCChat-content-container' id='RCChat-OuterDiv'>
           {isChatLoading ? (
