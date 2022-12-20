@@ -1,0 +1,337 @@
+.RCBottom-Navbar-Container .MuiOutlinedInput-root {
+  padding: 10px !important;
+  padding-right: 4px !important;
+  font-size: 14px !important;
+  background-color: rgba(38, 38, 38, 0.04);
+}
+
+.RCBottom-Navbar-Container-displayName .MuiOutlinedInput-root {
+  padding-right: 4px !important;
+  background-color: rgba(38, 38, 38, 0.04);
+}
+
+.RCBottom-Navbar-Container .MuiButtonBase-root {
+  border-radius: unset;
+}
+
+.tabpanel-holder .message-textField {
+  background-color: white;
+}
+
+.RCBottom-Navbar-Icon-Container .shop-btn-mobile {
+  background-color: #404040 !important;
+  border-radius: 4px !important;
+}
+
+.RCBottomNavbar-ErrorMessage {
+  color: red;
+  font-size: 0.75rem;
+  margin-top: 0px;
+  margin-left: 4px;
+}
+
+.error-textfield .MuiOutlinedInput-root.Mui-error .MuiOutlinedInput-notchedOutline {
+  border-color: #f44336 !important;
+}
+
+.tabpanel-holder.landscape .anon-container-mbox {
+  background: #ecf3fd;
+  color: #757575;
+  opacity: 0.8;
+  border-radius: 4px;
+}
+
+.message-textField .MuiOutlinedInput-root {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 4px !important;
+  background-color: rgba(38, 38, 38, 0.04);
+  font-size: 14px !important;
+}
+
+.message-textField #outlined-textarea {
+  min-height: 23px !important;
+  max-height: 115px !important;
+  overflow-y: auto !important;
+}
+
+.message-textField #outlined-textarea {
+  font: 14px !important;
+}
+
+.RCBottom-Navbar-Container {
+  background-color: white;
+  padding: 8px 1px;
+  height: 43px;
+}
+
+.RCBottom-Navbar-Icon-Container .MuiBadge-badge {
+  right: 0px;
+  top: -3px;
+}
+.RCBottom-Navbar-Icon-Container .dot-badge .MuiBadge-badge {
+  right: -2px;
+  bottom: 6px;
+  background-color: #ef5350;
+}
+
+.RCBottom-Navbar-Container-displayName {
+  background-color: white;
+  padding: 8px 4px;
+  height: 56px;
+}
+
+.anon-joined .MuiOutlinedInput-root {
+  padding-right: 4px !important;
+  font-size: 14px !important;
+}
+
+.displayNmaeTextField input[type='text'] {
+  font-size: 14px !important;
+}
+
+.anon-name-save-btn {
+  margin-left: 12px;
+  height: 40px;
+  width: 80px;
+  min-width: max-content;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-transform: uppercase;
+  background-color: black;
+}
+
+.circularProgress-div {
+  height: 40px;
+  width: 80px;
+  max-height: 26px !important;
+  max-width: 54px !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.anon-joined .MuiButton-root {
+  padding: 0px;
+}
+
+.anon-joined .anon-name-save-btn {
+  max-height: 26px !important;
+  max-width: 75px !important;
+  font-size: 13px !important;
+  margin-right: 7px !important;
+}
+
+.circularProgress-div.landscape {
+  background-color: black;
+}
+
+.circularProgress-div.portrait {
+  background-color: white;
+  width: 50px;
+  height: 24px;
+  max-height: 20px !important;
+  max-width: 20px !important;
+}
+
+.displayName-icon-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.RCBottom-Navbar-Container-button {
+  width: 50%;
+  margin-top: 0px;
+}
+
+.icon-single-parent {
+  height: 100%;
+  padding: 10px;
+}
+
+.RCBottom-Navbar-Icon-Container {
+  height: 100%;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.circularProgress {
+  width: 20px !important;
+  height: 20px !important;
+  color: white;
+}
+
+.circularProgress.landscape {
+  color: white;
+}
+.circularProgress.portrait {
+  color: black;
+}
+
+.icon-single {
+  width: 20px;
+  height: 20px;
+  color: black;
+}
+
+.RCBottom-Navbar-Container .like-share-icon {
+  width: 20px;
+  height: 20px;
+}
+
+#outlined-adornment-anonName {
+  padding: 10px !important;
+}
+
+.tabpanel-holder.portrait .RCBottom-Navbar-Container-button .circularProgress-div,
+.tabpanel-holder.v2_1to1_customer.portrait .RCBottom-Navbar-Container-button .circularProgress-div {
+  width: 50px;
+  height: 24px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .RCBottom-Navbar-Container-button #outlined-textarea,
+  .RCBottom-Navbar-Container-button #outlined-textarea-blocked {
+    padding: 0;
+    font-size: 14px;
+  }
+  .RCBottom-Navbar-Container-button .MuiOutlinedInput-root textarea::placeholder {
+    /* width: 100%; */
+    background-color: aquamarine;
+  }
+  .tabpanel-holder.portrait .RCBottom-Navbar-Icon-Container .shop-btn-mobile {
+    background-color: #ffffff !important;
+    border-radius: 4px !important;
+    color: #262626 !important;
+  }
+  .tabpanel-holder.portrait,
+  .tabpanel-holder.portrait {
+    background-color: rgba(38, 38, 38, 0);
+  }
+  .tabpanel-holder.portrait .RCBottom-Navbar-Container-button .circularProgress-div {
+    width: 50px;
+    height: 24px;
+  }
+  .tabpanel-holder.portrait .RCBottom-Navbar-Container-button {
+    background-color: rgba(38, 38, 38, 0.8);
+    border-radius: 4px;
+  }
+  .tabpanel-holder.portrait .RCBottomNavbar-disabled-chat {
+    background-color: rgba(38, 38, 38, 0.8);
+    text-align: center;
+  }
+  .tabpanel-holder.landscape .RCBottomNavbar-disabled-chat {
+    background-color: rgba(38, 38, 38, 0.04);
+    text-align: center;
+  }
+  .tabpanel-holder .RCBottomNavbar-disabled-chat {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .tabpanel-holder.portrait .RCBottomNavbar-disabled-chat h5 {
+    color: rgb(134 132 132);
+  }
+  .tabpanel-holder.landscape .RCBottomNavbar-disabled-chat h5 {
+    color: rgba(0, 0, 0, 0.38);
+  }
+  .RCBottomNavbar-ErrorMessage {
+    margin-left: 0;
+    padding: 0 16px;
+  }
+  textarea::placeholder {
+    color: white;
+  }
+  .tabpanel-holder.portrait .message-textField {
+    background-color: rgba(38, 38, 38, 0.6) !important;
+    padding: 8px 17px !important;
+    margin-top: 6px;
+  }
+  .tabpanel-holder.portrait .icon-single-parent {
+    padding: 7.5px 8px;
+  }
+  .tabpanel-holder.portrait .message-textField .MuiOutlinedInput-notchedOutline,
+  .tabpanel-holder.v2_1to1_customer.portrait .message-textField .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+  .tabpanel-holder.portrait .message-textField .MuiOutlinedInput-root {
+    background-color: rgba(38, 38, 38, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.4) !important;
+    outline: #ffffff;
+    box-shadow: -4px 4px 40px rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+    padding: 8px 8px 7px 16px !important;
+    color: #ffffff !important;
+    min-height: 40px;
+  }
+  .tabpanel-holder.portrait .anon-name-save-btn {
+    max-height: 26px;
+    max-width: 54px;
+    margin-right: 10px;
+    background-color: #ffffff;
+    color: #262626 !important;
+    font-size: 13px;
+    line-height: 22px;
+  }
+  .tabpanel-holder.portrait button.anon-name-save-btn:disabled {
+    color: #757575 !important;
+    max-height: 24px;
+    max-width: 54px;
+  }
+  .tabpanel-holder.portrait .anon-joined .MuiInputBase-formControl.MuiInputBase-adornedEnd,
+  .tabpanel-holder.v2_1to1_customer.portrait .anon-joined .MuiInputBase-formControl.MuiInputBase-adornedEnd {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    background-color: rgba(38, 38, 38, 0.8);
+  }
+  .tabpanel-holder.portrait .anon-joined .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline,
+  .tabpanel-holder.v2_1to1_customer.portrait .anon-joined .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+    border-color: transparent !important;
+  }
+  .tabpanel-holder.portrait .anon-joined .MuiInputBase-formControl.MuiInputBase-multiline,
+  .tabpanel-holder.v2_1to1_customer.portrait .anon-joined .MuiInputBase-formControl.MuiInputBase-multiline {
+    min-height: 40px;
+  }
+  .tabpanel-holder.portrait .RCBottom-Navbar-Container-button .MuiOutlinedInput-notchedOutline,
+  .tabpanel-holder.v2_1to1_customer.portrait .RCBottom-Navbar-Container-button .MuiOutlinedInput-notchedOutline {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+  }
+  .tabpanel-holder.portrait .RCBottom-Navbar-Container-button #outlined-textarea,
+  .tabpanel-holder.portrait .RCBottom-Navbar-Container-button #outlined-textarea-blocked,
+  .tabpanel-holder.v2_1to1_customer.portrait .RCBottom-Navbar-Container-button #outlined-textarea,
+  .tabpanel-holder.v2_1to1_customer.portrait .RCBottom-Navbar-Container-button #outlined-textarea-blocked {
+    -webkit-text-fill-color: white;
+  }
+  #outlined-textarea-blocked {
+    /* height: 24px !important; */
+    font-size: 14px !important;
+  }
+  .tabpanel-holder.portrait .RCBottom-Navbar-Container {
+    background-color: rgba(38, 38, 38, 0.6);
+    padding: 8px 1px 8px 14px;
+    margin: 6px 0 0 0;
+    height: 40px;
+    z-index: 4;
+  }
+  .tabpanel-holder.portrait .icon-single {
+    color: #ffffff;
+  }
+}
+
+@media only screen and (max-width: 340px) {
+  #outlined-textarea-blocked {
+    height: 24px !important;
+    font-size: 14px;
+  }
+}

@@ -107,7 +107,8 @@ const ChatComponents = props => {
         {window.innerWidth > 1024 ? (
           <ChatInput {...props} showReplyPopup={showReplyPopup} setShowReplyPopu={setShowReplyPopup} />
         ) : (
-          <ChatInputMobile {...props} showReplyPopup={showReplyPopup} setShowReplyPopu={setShowReplyPopup} />
+          <ChatInput {...props} showReplyPopup={showReplyPopup} setShowReplyPopu={setShowReplyPopup} />
+          // <ChatInputMobile {...props} showReplyPopup={showReplyPopup} setShowReplyPopu={setShowReplyPopup} />
         )}
       </div>
     </>

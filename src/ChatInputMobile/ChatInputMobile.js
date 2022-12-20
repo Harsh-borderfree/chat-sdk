@@ -127,6 +127,7 @@ const ChatInputMobile = props => {
       res => {
         setUpdatingDisplayName(false)
         setDisplayNameInput('')
+        setEditDisplayNameMobile(false)
 
         if (userData?.displayName) {
           //not showing snackbar will do later
@@ -182,8 +183,7 @@ const ChatInputMobile = props => {
         }
       },
       e => {
-        // setDisplayNameBox(false)
-        // setEditDisplayNameBox(false)
+        setEditDisplayNameMobile(false)
         setDisplayNameInput('')
         setUpdatingDisplayName(false)
         console.log('error during updating displayname', e)
@@ -746,7 +746,7 @@ const ChatInputMobile = props => {
                       variant='dot'
                       invisible={user_role === 'consumer' ? !props?.showViewerTab : !eventsState?.newGuestNotify}
                     >
-                      <MoreHorizOutlinedIcon />
+                      <MoreHorizOutlinedIcon color='#000000' />
                     </Badge>
                   </IconButton>
 
@@ -862,7 +862,7 @@ const ChatInputMobile = props => {
                         variant='dot'
                         invisible={user_role === 'consumer' ? !props?.showViewerTab : !eventsState?.newGuestNotify}
                       >
-                        <MoreHorizOutlinedIcon />
+                        <MoreHorizOutlinedIcon color='#000000' />
                       </Badge>
                     </IconButton>
                   )}
