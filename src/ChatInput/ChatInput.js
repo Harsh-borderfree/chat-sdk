@@ -53,7 +53,6 @@ const ChatInput = props => {
     hostChatAsBrand && hostChatAsBrand[loggedInEmail] ? sessionStorage.getItem('ORGNAME') : userData?.displayName
   )
   const [showChangeChatTitleBox, setShowChangeChatTitleBox] = useState(false)
-  const [showReplyBox, setShowReplyBox] = useState(false)
   const userRole = EventPermission?.event_permission[eventID]?.event_role
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
 
@@ -200,7 +199,7 @@ const ChatInput = props => {
 
           data: {
             function: 'chat',
-            requestMsg: !showReplyBox
+            requestMsg: !props?.showReplyPopup
               ? senderUserReqBody
               : {
                   ...senderUserReqBody,
@@ -214,7 +213,7 @@ const ChatInput = props => {
         },
         res => {
           console.log('SEND CHAT SUUUUU 214', res)
-          setShowReplyBox(false)
+          props?.setShowReplyPopup(false)
         },
 
         err => {
@@ -230,7 +229,7 @@ const ChatInput = props => {
           data: {
             function: 'chat',
             //req body for user type admin
-            requestMsg: !showReplyBox
+            requestMsg: !props?.showReplyPopup
               ? senderAdminReqBody
               : {
                   ...senderAdminReqBody,
@@ -244,7 +243,7 @@ const ChatInput = props => {
         },
         res => {
           console.log('SEND CHAT SUUUUU 214', res)
-          setShowReplyBox(false)
+          props?.setShowReplyPopup(false)
         },
 
         err => {

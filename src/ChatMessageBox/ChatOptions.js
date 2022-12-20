@@ -280,7 +280,11 @@ const ChatOptions = props => {
           >
             <MenuItem
               xid='4O'
-              // onClick={onReplyClick}
+              onClick={() => {
+                setShowMenuItem(false)
+                props.setShowReplyPopup(true)
+                props.setRepliedMessageData(selectedMessage)
+              }}
               className='RCChat-menu-pin'
             >
               {t('watch.reply')}
