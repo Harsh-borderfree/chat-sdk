@@ -7,6 +7,8 @@ import { useTranslation } from 'react-i18next'
 import ChatMessageList from '../ChatMessageList/ChatMessageList'
 import { CircularProgress } from '@mui/material'
 import ChatPinnedMessage from '../ChatPinnedMessage/ChatPinnedMessage'
+import { useControlled } from '@mui/material'
+import { FormControlUnstyled } from '@mui/base'
 
 const ChatComponents = props => {
   const { eventID, groupID, isChatLoading } = props
@@ -31,6 +33,10 @@ const ChatComponents = props => {
   // 3.Link Messages
   // 4.Tryon Messages
   // 5.Joined the chat messages
+
+  // useEffect(() => {
+  //   console.log('ADMIN PINNNED', adminPinnedMessages)
+  // }, [adminPinnedMessages])
 
   useEffect(() => {
     if (allChatMessages.length > 0 || allReplayMessages.length > 0) {

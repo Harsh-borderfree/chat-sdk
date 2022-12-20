@@ -4,8 +4,8 @@ import PinnedLinkMessage from './PinnedLinkMessage'
 
 const PinnedTextMessage = props => {
   const message = props?.messageData
-  const [metaData, setmetaData] = useState({})
-  const [isLinkInMessage, setIsLinkInMessage] = useState(false)
+  const { metaData, setmetaData, isLinkInMessage, setIsLinkInMessage } = props
+
   const [redirectUrl, setRedirectUrl] = useState('')
 
   useEffect(() => {
@@ -67,23 +67,64 @@ const PinnedTextMessage = props => {
   }
 
   return (
-    <div>
+    <>
       {isLinkInMessage && metaData && <PinnedLinkMessage metaData={metaData} openLink={openLink} />}
 
-      <div className='MuiTypography-subtitle2'>
+      <div
+        className={`MuiTypography-subtitle2 pinned-message-text ${
+          props?.accordianActive ? `pinned-message-text-collapsed` : `pinned-message-text-expand`
+        }`}
+        id='pinned-message-text'
+      >
         {newLineHandler(message?.message_text)?.map(elem => {
           return (
             <>
               {isUrl(elem) ? (
-                <a onClick={openLink}>{elem}</a>
+                <>
+                  {elem.split(' ').map(s => {
+                    return (
+                      <>
+                        {isUrl(s) ? (
+                          <a onClick={openLink} className='pinned-message-text-link'>
+                            {s}&nbsp;
+                          </a>
+                        ) : (
+                          <>
+                            {s != '' && (
+                              <p
+                                className='MuiTypography-subtitle2 pinned-message-text-normal'
+                                style={{
+                                  display: 'inline-block',
+                                  margin: '0px 0px',
+                                }}
+                              >
+                                {s}&nbsp;
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )
+                  })}
+                </>
               ) : (
-                <>{elem != '' && <p className='MuiTypography-subtitle2 '>{elem}</p>}</>
+                <>
+                  {elem != '' && (
+                    <p
+                      className={`MuiTypography-subtitle2 pinned-message-text-normal ${
+                        props?.accordianActive ? `pinned-message-text-normal-collapsed` : `pinned-message-text-normal-expand`
+                      }`}
+                    >
+                      {elem}
+                    </p>
+                  )}
+                </>
               )}
             </>
           )
         })}
       </div>
-    </div>
+    </>
   )
 }
 

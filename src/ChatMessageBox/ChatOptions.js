@@ -93,48 +93,48 @@ const ChatOptions = props => {
     )
   }
 
-  // const unPinMessages = msg => {
-  //   let unPinId = msg ? msg?.msg_id : props?.mesagesData?.id
+  const unPinMessages = () => {
+    setShowMenuItem(false)
+    let unPinId = selectedMessage?.id
 
-  //   let pinnedMessages = adminPinnedMessages.filter(msg => {
-  //     return msg?.msg_id !== unPinId
-  //   })
+    let pinnedMessages = adminPinnedMessages?.filter(msg => {
+      return msg?.message_id !== unPinId
+    })
 
-  //   //updating the redux state
-  //   let data = {
-  //     event_id: event_id,
-  //     data: {
-  //       ...currentEvent?.chat_info,
-  //       pinned_message: pinnedMessages,
-  //     },
-  //     event_type: 'chat_info',
-  //   }
-  //   global.sdk.SetEventLevelData(
-  //     data,
-  //     () => {},
-  //     res => {
-  //       console.log('failed to update destinations', res)
-  //     }
-  //   )
+    // updating the redux state
+    let data = {
+      event_id: eventID,
+      data: {
+        ...currentEvent?.chat_info,
+        pinned_message: pinnedMessages,
+      },
+      event_type: 'chat_info',
+    }
+    global.sdk.SetEventLevelData(
+      data,
+      () => {},
+      res => {
+        console.log('failed to update destinations', res)
+      }
+    )
 
-  //   //updating show json
-  //   global.sdk.UpdateShowJson(
-  //     {
-  //       id: event_id,
-  //       data: {
-  //         chat_info: {
-  //           ...currentEvent?.chat_info,
-  //           pinned_message: pinnedMessages,
-  //         },
-  //       },
-  //     },
-  //     () => {},
-  //     e => {
-  //       console.log('error update', e)
-  //     }
-  //   )
-  //   handleClose()
-  // }
+    //updating show json
+    global.sdk.UpdateShowJson(
+      {
+        id: eventID,
+        data: {
+          chat_info: {
+            ...currentEvent?.chat_info,
+            pinned_message: pinnedMessages,
+          },
+        },
+      },
+      () => {},
+      e => {
+        console.log('error update', e)
+      }
+    )
+  }
 
   return (
     <>
@@ -184,7 +184,7 @@ const ChatOptions = props => {
               {t('watch.reply')}
             </MenuItem>
             {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) &&
-              (adminPinnedMessages?.find(pinEl => pinEl?.msg_id === message?.id) ? (
+              (adminPinnedMessages?.find(pinEl => pinEl?.message_id === selectedMessage?.id) ? (
                 <MenuItem
                   xid='4P'
                   onClick={() => {

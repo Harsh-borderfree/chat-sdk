@@ -76,9 +76,33 @@ const ChatTextMesage = props => {
           return (
             <>
               {isUrl(elem) ? (
-                <a onClick={openLink} className='text-message-link'>
-                  {elem}
-                </a>
+                <>
+                  {elem.split(' ').map(s => {
+                    return (
+                      <>
+                        {isUrl(s) ? (
+                          <a onClick={openLink} className='text-message-link'>
+                            {s}&nbsp;
+                          </a>
+                        ) : (
+                          <>
+                            {s != '' && (
+                              <p
+                                style={{
+                                  display: 'inline-block',
+                                  margin: '0px 0px',
+                                }}
+                                className='MuiTypography-subtitle2 text-message-content'
+                              >
+                                {s}&nbsp;
+                              </p>
+                            )}
+                          </>
+                        )}
+                      </>
+                    )
+                  })}
+                </>
               ) : (
                 <>{elem != '' && <p className='MuiTypography-subtitle2 text-message-content'>{elem}</p>}</>
               )}
