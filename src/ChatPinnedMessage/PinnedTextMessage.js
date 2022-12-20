@@ -74,7 +74,6 @@ const PinnedTextMessage = props => {
         className={`MuiTypography-subtitle2 pinned-message-text ${
           props?.accordianActive ? `pinned-message-text-collapsed` : `pinned-message-text-expand`
         }`}
-        id='pinned-message-text'
       >
         {newLineHandler(message?.message_text)?.map(elem => {
           return (
@@ -111,6 +110,7 @@ const PinnedTextMessage = props => {
                 <>
                   {elem != '' && (
                     <p
+                      id='pinned-message-text'
                       className={`MuiTypography-subtitle2 pinned-message-text-normal ${
                         props?.accordianActive ? `pinned-message-text-normal-collapsed` : `pinned-message-text-normal-expand`
                       }`}

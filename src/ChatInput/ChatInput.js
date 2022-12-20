@@ -577,6 +577,7 @@ const ChatInput = props => {
               transition: 'all 0.5s',
             }}
             ref={el => (inputRef = el)}
+            disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
             className={`${maxLimitExceeds ? 'error-textfield' : 'not-error'} message-textField`}
             id={textfieldLineHeight < 116 ? 'outlined-textarea' : 'outlined-textarea-scroll'}
             placeholder={

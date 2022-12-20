@@ -24,6 +24,9 @@ const ChatOptions = props => {
   const permissions = EventPermission?.event_permission[eventID]?.permission
   const [selectedMessage, setSelectedMessage] = useState({})
 
+  let alreadyBlockedEmail = currentEvent?.chat_info?.blocked_Email?.length > 0 ? [...currentEvent?.chat_info?.blocked_Email] : []
+  console.log('+++++ALREADY BLOKCEDDD', alreadyBlockedEmail)
+
   const pinOnAdminClick = () => {
     setShowMenuItem(false)
     let pinnedMessages = currentEvent?.chat_info?.pinned_message ? [...currentEvent?.chat_info?.pinned_message] : []
@@ -136,6 +139,105 @@ const ChatOptions = props => {
     )
   }
 
+  const onBlockClick = () => {
+    setShowMenuItem(false)
+    let userMsgData = selectedMessage?.sender_id
+    let alreadyBlockedEmail =
+      currentEvent?.chat_info?.blocked_Email?.length > 0 ? [...currentEvent?.chat_info?.blocked_Email] : []
+
+    //updating eventlevel data
+    let newBlocked = {
+      email: userMsgData,
+      isBlocked: true,
+    }
+
+    alreadyBlockedEmail.push(newBlocked)
+
+    let data = {
+      event_id: eventID,
+      data: {
+        ...currentEvent?.chat_info,
+        blocked_Email: alreadyBlockedEmail,
+      },
+
+      event_type: 'chat_info',
+    }
+
+    global.sdk.SetEventLevelData(
+      data,
+      () => {},
+      res => {
+        console.log('failed to update destinations', res)
+      }
+    )
+
+    // //updating show json
+    global.sdk.UpdateShowJson(
+      {
+        id: eventID,
+        data: {
+          chat_info: {
+            ...currentEvent?.chat_info,
+            blocked_Email: alreadyBlockedEmail,
+          },
+        },
+      },
+      () => {},
+      e => {
+        console.log('error update', e)
+      }
+    )
+  }
+
+  const onUnblockClick = () => {
+    setShowMenuItem(false)
+    let userMsgData = selectedMessage?.sender_id
+
+    let alreadyBlockedEmail =
+      currentEvent?.chat_info?.blocked_Email?.length > 0 ? [...currentEvent?.chat_info?.blocked_Email] : []
+    const presentIndex = checkForBlockEmail(userMsgData, currentEvent)
+    let newBlockedArray = [...alreadyBlockedEmail]
+
+    if (presentIndex >= 0) {
+      newBlockedArray.splice(presentIndex, 1)
+    }
+
+    let data = {
+      event_id: eventID,
+      data: {
+        ...currentEvent?.chat_info,
+        blocked_Email: newBlockedArray,
+      },
+
+      event_type: 'chat_info',
+    }
+
+    global.sdk.SetEventLevelData(
+      data,
+      () => {},
+      res => {
+        console.log('failed to update destinations', res)
+      }
+    )
+
+    // //updating show json
+    global.sdk.UpdateShowJson(
+      {
+        id: eventID,
+        data: {
+          chat_info: {
+            ...currentEvent?.chat_info,
+            blocked_Email: newBlockedArray,
+          },
+        },
+      },
+      () => {},
+      e => {
+        console.log('error update', e)
+      }
+    )
+  }
+
   return (
     <>
       <IconButton
@@ -216,22 +318,14 @@ const ChatOptions = props => {
             {isAllowed(permissions, Permissions.chat_admin_msg_block.index) &&
               checkForBlockEmail(message?.sender_id, currentEvent) < 0 &&
               showBlockOption && (
-                <MenuItem
-                  xid='4R'
-                  // onClick={onBlockClick}
-                  className='RCChat-menu-pin'
-                >
+                <MenuItem xid='4R' onClick={onBlockClick} className='RCChat-menu-pin'>
                   {t('watch.block_user')}
                 </MenuItem>
               )}
             {isAllowed(permissions, Permissions.chat_admin_msg_block.index) &&
               checkForBlockEmail(message?.sender_id, currentEvent) >= 0 &&
               showBlockOption && (
-                <MenuItem
-                  xid='4S'
-                  // onClick={onUnblockClick}
-                  className='RCChat-menu-pin'
-                >
+                <MenuItem xid='4S' onClick={onUnblockClick} className='RCChat-menu-pin'>
                   {t('watch.unblock_user')}
                 </MenuItem>
               )}

@@ -93,7 +93,7 @@ const ChatPinnedMessage = props => {
   }
 
   useEffect(() => {
-    if (!accordianActive) countLines()
+    if (accordianActive) countLines()
   }, [adminPinnedMessages])
 
   return (
