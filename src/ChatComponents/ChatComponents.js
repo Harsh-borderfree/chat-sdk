@@ -12,6 +12,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
 import ChatInputMobile from '../ChatInputMobile/ChatInputMobile'
 import './ChatComponents.css'
+import NewMessageToast from '../ChatMessageList/NewMessageToast'
+import scrollIntoView from 'scroll-into-view-if-needed'
 
 const ChatComponents = props => {
   const { eventID, isChatLoading, setCurrentComponent } = props
@@ -19,10 +21,6 @@ const ChatComponents = props => {
   const allChatMessages = allReduxMessages[eventID] || []
   const EventPermission = useSelector(state => state.permission)
   const userRole = EventPermission?.event_permission[eventID]?.event_role
-  const replayMessages = useSelector(state => state?.chat?.replayMessages)
-  const allReplayMessages = replayMessages ? replayMessages[eventID] : []
-
-  const [chatMessageList, setChatMessageList] = useState([])
   const eventsState = useSelector(state => state.events)
   const { customisedEvents } = eventsState
   const currentEvent = customisedEvents[eventID]
@@ -39,10 +37,11 @@ const ChatComponents = props => {
   )
   const [isOverFLowingChat, setIsOverflowingChat] = useState(false)
   const [showChatPortrait, setShowChatPortrait] = useState(true)
+  const [showNewMessageToast, setShowNewMessageToast] = useState(false)
   const mobilePortrait = window.innerWidth < 1025 && event_layout === 'portrait'
 
   //For position of chat accordian when close
-  let pinnedElement = document.getElementsByClassName('pinned-messages')
+  let pinnedElement = document.getElementsByClassName('pin-msg-box')
   let pushedPollContainer = document.getElementsByClassName('RCPoll-Wrapper')
   let pushedBannerContainer = document.getElementsByClassName('parent_banner')
   let messageTextField = document.getElementsByClassName('message-textField')
@@ -95,31 +94,6 @@ const ChatComponents = props => {
   // 4.Tryon Messages
   // 5.Joined the chat messages
 
-  useEffect(() => {
-    if (allChatMessages?.length > 0 || allReplayMessages?.length > 0) {
-      const isRecordedVideoPlaying =
-        currentEvent.status == 'streaming_done' && global.mem.current.event.isRecordedVideoPlaying == true
-      let tempMessageList = []
-      if (isRecordedVideoPlaying == true) {
-        tempMessageList = [...allReplayMessages]
-        setChatMessageList(tempMessageList)
-      } else {
-        tempMessageList = [...allChatMessages]
-        setChatMessageList(tempMessageList)
-      }
-      setTimeout(() => {
-        let mlist = document.getElementsByClassName('Chat-message-list-container')
-        let isOverflowing = false
-        if (mlist && mlist[0]) {
-          isOverflowing = mlist[0]?.clientWidth < mlist[0]?.scrollWidth || mlist[0]?.clientHeight < mlist[0]?.scrollHeight
-          setIsOverflowingChat(isOverflowing)
-        }
-      }, 100)
-    }
-  }, [allChatMessages, allReplayMessages])
-
-  useState(() => {}, [isOverFLowingChat])
-
   const makeChatHidden = () => {
     let mlist = document.getElementsByClassName('Chat-message-list-container')
     let chatTitle = document.getElementsByClassName('RCChat-PortraitView-Title-overflow')
@@ -157,7 +131,7 @@ const ChatComponents = props => {
   return (
     <>
       <div className={`chat-elements-box RCChat-container ${userRole} ${event_layout}`}>
-        {Window.innerWidth > 1024 && (
+        {window.innerWidth > 1024 && (
           <div className='RCChat-title-div'>
             <Typography variant='h6'>{t('preview.chat')}</Typography>
             <IconButton
@@ -214,20 +188,46 @@ const ChatComponents = props => {
             <div className='chat-loading'>
               <CircularProgress />
             </div>
-          ) : !isChatLoading && allChatMessages.length === 0 ? (
+          ) : !isChatLoading && allChatMessages?.length === 0 ? (
             <div className='chat-loading'>NO Messages</div>
           ) : (
             <ChatMessageList
-              chatMessageList={chatMessageList}
               {...props}
               setShowReplyPopup={setShowReplyPopup}
               setRepliedMessageData={setRepliedMessageData}
               setIsOverflowingChat={setIsOverflowingChat}
               event_layout={event_layout}
               isOverFLowingChat={isOverFLowingChat}
+              setShowNewMessageToast={setShowNewMessageToast}
             />
           )}
         </div>
+        {showNewMessageToast && (
+          <div
+            className='new-message-btn-container'
+            xid='4T'
+            onClick={() => {
+              const node = document.getElementById('end-div')
+              scrollIntoView(node, {
+                scrollMode: 'if-needed',
+                behavior: 'smooth',
+                block: 'end',
+                inline: 'nearest',
+              })
+              setShowNewMessageToast(false)
+
+              // if (props?.showChat) {
+              //   scrollToBottom()
+              //   setShowNewMessageToast(false)
+              // } else {
+              //   makeChatVisible()
+              // }
+            }}
+            size='large'
+          >
+            <NewMessageToast size={25} className='new-messages-button' />
+          </div>
+        )}
         {mobilePortrait &&
           adminPinnedMessages &&
           adminPinnedMessages?.length > 0 &&

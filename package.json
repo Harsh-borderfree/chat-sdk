@@ -100,6 +100,7 @@
     "react-icons": "^4.3.1",
     "react-redux": "^7.2.4",
     "react-spinkit": "^3.0.0",
+    "scroll-into-view-if-needed": "^3.0.3",
     "timeago.js": "^4.0.2"
   },
   "browserslist": {
