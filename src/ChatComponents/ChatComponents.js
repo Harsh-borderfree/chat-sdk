@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { Typography, IconButton, ownerWindow } from '@mui/material'
+import { Typography, IconButton } from '@mui/material'
 import ChatInput from '../ChatInput/ChatInput'
 import CloseIcon from '@mui/icons-material/Close'
 import { useTranslation } from 'react-i18next'
@@ -26,7 +26,7 @@ const ChatComponents = props => {
   const eventsState = useSelector(state => state.events)
   const { customisedEvents } = eventsState
   const currentEvent = customisedEvents[eventID]
-  const [showReplyPopup, setShowReplyPopup] = useState()
+  const [showReplyPopup, setShowReplyPopup] = useState(false)
   const [repliedMessagesData, setRepliedMessageData] = useState({})
   const { t } = useTranslation()
   const adminPinnedMessages = currentEvent?.chat_info?.pinned_message ? [...currentEvent?.chat_info?.pinned_message] : []
@@ -38,9 +38,47 @@ const ChatComponents = props => {
       : 'landscape'
   )
   const [isOverFLowingChat, setIsOverflowingChat] = useState(false)
-  const [showChatPortrait, setShowChatPortrait] = useState(false)
-
+  const [showChatPortrait, setShowChatPortrait] = useState(true)
   const mobilePortrait = window.innerWidth < 1025 && event_layout === 'portrait'
+
+  //For position of chat accordian when close
+  let pinnedElement = document.getElementsByClassName('pinned-messages')
+  let pushedPollContainer = document.getElementsByClassName('RCPoll-Wrapper')
+  let pushedBannerContainer = document.getElementsByClassName('parent_banner')
+  let messageTextField = document.getElementsByClassName('message-textField')
+  let newMessageToast = document.getElementsByClassName('new-messages-button')
+  let replyBox = document.getElementsByClassName('RCReplyMessageBox-active')
+
+  let newMessageToastHeight = 0
+
+  if (newMessageToast[0]) {
+    newMessageToastHeight = newMessageToast[0]?.clientHeight
+  }
+
+  let messageTextFieldHeight = 99
+  if (messageTextField[0]) {
+    messageTextFieldHeight = Math.max(messageTextField[0]?.clientHeight + 25, 99)
+  }
+
+  let replyBoxHeight = 0
+  if (replyBox[0]) {
+    replyBoxHeight = replyBox[0]?.clientHeight
+  }
+
+  let pinContainerHeight = 0
+  if (pinnedElement[0]) {
+    pinContainerHeight = pinnedElement[0]?.clientHeight
+  }
+
+  let pushedBannerContainerHeight = 0
+  if (pushedBannerContainer[0]) {
+    pushedBannerContainerHeight = pushedBannerContainer[0]?.clientHeight
+  }
+  let pushedPollContainerHeight = 0
+  if (pushedPollContainer[0]) {
+    pushedPollContainerHeight = pushedPollContainer[0]?.clientHeight + 10
+  }
+  let largestHeight = Math.max(pinContainerHeight, pushedBannerContainerHeight, pushedPollContainerHeight)
 
   useEffect(() => {
     if (currentEvent?.event_type === 'call_1to1' && userRole === 'v2_1to1_customer' && window.innerWidth < 1025) {
@@ -69,25 +107,52 @@ const ChatComponents = props => {
         tempMessageList = [...allChatMessages]
         setChatMessageList(tempMessageList)
       }
-
-      //Check for chat overflowing for mobile portrait only
-      if (mobilePortrait) {
+      setTimeout(() => {
         let mlist = document.getElementsByClassName('Chat-message-list-container')
         let isOverflowing = false
         if (mlist && mlist[0]) {
           isOverflowing = mlist[0]?.clientWidth < mlist[0]?.scrollWidth || mlist[0]?.clientHeight < mlist[0]?.scrollHeight
           setIsOverflowingChat(isOverflowing)
-        } else {
-          setIsOverflowingChat(isOverflowing)
         }
-      }
+      }, 100)
     }
   }, [allChatMessages, allReplayMessages])
 
-  // useEffect(() => {
-  //   if (showChatPortrait) {
-  //   }
-  // }, [showChatPortrait])
+  useState(() => {}, [isOverFLowingChat])
+
+  const makeChatHidden = () => {
+    let mlist = document.getElementsByClassName('Chat-message-list-container')
+    let chatTitle = document.getElementsByClassName('RCChat-PortraitView-Title-overflow')
+
+    if (mlist && mlist[0]) {
+      mlist[0].style.visibility = 'hidden'
+    }
+
+    if (chatTitle && chatTitle[0]) {
+      chatTitle[0].style.top = `calc(100% - ${messageTextFieldHeight}px - ${largestHeight}px - ${newMessageToastHeight}px - ${replyBoxHeight}px)`
+    }
+  }
+
+  const makeChatVisible = () => {
+    let mlist = document.getElementsByClassName('Chat-message-list-container')
+    let chatTitle = document.getElementsByClassName('RCChat-PortraitView-Title-overflow')
+
+    if (mlist && mlist[0]) {
+      mlist[0].style.visibility = 'visible'
+    }
+
+    if (chatTitle && chatTitle[0]) {
+      chatTitle[0].style.top = '0px'
+    }
+  }
+
+  useEffect(() => {
+    if (showChatPortrait) {
+      makeChatVisible()
+    } else {
+      makeChatHidden()
+    }
+  }, [showChatPortrait])
 
   return (
     <>
@@ -127,11 +192,9 @@ const ChatComponents = props => {
               setShowChatPortrait(prev => !prev)
             }}
             className='RCChat-PortraitView-Title-overflow'
-            // style={{
-            //   top: props?.showChat
-            //     ? '0px'
-            //     : `calc(100% - ${messageTextFieldHeight}px - ${largestHeight}px - ${newMessageToastHeight}px - ${replyBoxHeight}px`,
-            // }}
+            style={{
+              top: showChatPortrait ? '0px' : `calc(100% - 99px)`,
+            }}
           >
             <span style={{ color: '#ffffff' }}>{t('preview.chat')}</span>
             {showChatPortrait ? (
@@ -159,10 +222,9 @@ const ChatComponents = props => {
               {...props}
               setShowReplyPopup={setShowReplyPopup}
               setRepliedMessageData={setRepliedMessageData}
+              setIsOverflowingChat={setIsOverflowingChat}
               event_layout={event_layout}
               isOverFLowingChat={isOverFLowingChat}
-              showChatPortrait={showChatPortrait}
-              setShowChatPortrait={setShowChatPortrait}
             />
           )}
         </div>
