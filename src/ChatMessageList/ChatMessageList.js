@@ -5,12 +5,23 @@ import ChatMessageBox from '../ChatMessageBox/ChatMessageBox'
 import { useTranslation } from 'react-i18next'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp'
-import { IconButton } from '@mui/material'
+import { IconButton, CircularProgress } from '@mui/material'
 import scrollIntoView from 'scroll-into-view-if-needed'
 
 const ChatMessageList = props => {
   const { t } = useTranslation()
-  const { isOverFLowingChat, eventID, event_layout, setIsOverflowingChat, setShowNewMessageToast } = props
+  const {
+    isOverFLowingChat,
+    eventID,
+    event_layout,
+    setIsOverflowingChat,
+    setShowNewMessageToast,
+    lastChatKey,
+    setLastChatKey,
+    groupID,
+    hasMoreChats,
+    setHasMoreChats,
+  } = props
   const eventsState = useSelector(state => state.events)
   const { customisedEvents } = eventsState
   const currentEvent = customisedEvents[eventID]
@@ -149,9 +160,43 @@ const ChatMessageList = props => {
     }
   }, [showChat])
 
+  const [loading, setLoading] = useState(false)
+
+  function handleLoadMore() {
+    setLoading(true)
+
+    global.sdk.FetchChatData(
+      {
+        streamID: eventID,
+        groupID: groupID,
+        lastChatKey: lastChatKey,
+        insertLast: false,
+        limit: 100,
+      },
+
+      res => {
+        setLastChatKey(res.data.last_eval_key.id)
+        setHasMoreChats(res.data.has_next)
+        setLoading(false)
+      },
+      () => {}
+    )
+  }
+
+  function isAtTop(currentTarget) {
+    return currentTarget.scrollTop !== 0
+  }
+
   return (
     <>
-      <div className='Chat-message-list-container' id='messageBody'>
+      <div
+        className={`Chat-message-list-container ${loading ? 'loading' : ''}`}
+        onScroll={e => {
+          if (!hasMoreChats || isAtTop(e.currentTarget)) return
+          handleLoadMore()
+        }}
+        id='messageBody'
+      >
         {mobilePortrait && !isOverFLowingChat && allChatMessages?.length > 0 && (
           <div
             xid='97'
@@ -196,6 +241,11 @@ const ChatMessageList = props => {
           }
         })}
         <div id='end-div'></div>
+        {loading && (
+          <div className='RCChat-CircularProgress'>
+            <CircularProgress />
+          </div>
+        )}
       </div>
     </>
   )
