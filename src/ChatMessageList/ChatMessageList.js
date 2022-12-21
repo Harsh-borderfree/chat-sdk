@@ -42,7 +42,6 @@ const ChatMessageList = props => {
   const singleMessage = allSingleMessage && allSingleMessage[eventID] ? allSingleMessage[eventID] : []
 
   const scrollToBottom = () => {
-    console.log('+++++CALLALLALAL SCROLL')
     const node = document.getElementById('end-div')
     scrollIntoView(node, {
       scrollMode: 'if-needed',

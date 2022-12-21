@@ -33,6 +33,7 @@ const ChatInputMobile = props => {
     selectDisplayName,
     setSelectDisplayName,
     event_layout,
+    setShowReplyPopup,
   } = props
   const classes = useStyles()
   const splitter = new GraphemeSplitter()
@@ -181,6 +182,7 @@ const ChatInputMobile = props => {
   const sendChat = () => {
     let message = inputMessage.trim()
     setInputMessage('')
+    setShowReplyPopup(false)
     //req body for user type consumer
     let senderUserReqBody = {
       message_text: message,

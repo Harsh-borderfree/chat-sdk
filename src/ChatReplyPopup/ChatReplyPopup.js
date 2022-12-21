@@ -1,6 +1,7 @@
 import { Typography } from '@mui/material'
 import React from 'react'
 import { showThreeDotsAfterNText } from '../ChatUtils/chatUtils'
+import CloseIcon from '@mui/icons-material/Close'
 
 const ChatReplyPopup = props => {
   const message = props?.messageData
@@ -22,6 +23,12 @@ const ChatReplyPopup = props => {
 
             {message?.sender_name === localStorage.getItem('ORGNAME') && <ChatBlueTickBrand />}
           </div>
+          <CloseIcon
+            className='RC-close-icon'
+            onClick={() => {
+              props?.setShowReplyPopup(false)
+            }}
+          />
         </div>
         <Typography className='rce-mbox-reply-message'>{showThreeDotsAfterNText(message?.message_text, 30) || '...'}</Typography>
       </div>

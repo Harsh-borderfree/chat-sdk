@@ -32,7 +32,7 @@ const ChatInput = props => {
   const splitter = new GraphemeSplitter()
   const [textfieldLineHeight, setTextfieldLineHeight] = useState(0)
   const [inputMessage, setInputMessage] = useState('')
-  const { eventID, groupID, isAllowed, Permissions, Auth } = props
+  const { eventID, groupID, isAllowed, Permissions, Auth, repliedMessagesData, setShowReplyPopup } = props
   const { t } = useTranslation()
   const eventsState = useSelector(state => state.events)
   const { customisedEvents } = eventsState
@@ -164,6 +164,7 @@ const ChatInput = props => {
     setShowEmojiPicker(false)
     let message = inputMessage.trim()
     setInputMessage('')
+    setShowReplyPopup(false)
     //req body for user type consumer
     let senderUserReqBody = {
       message_text: message,
@@ -204,9 +205,9 @@ const ChatInput = props => {
               : {
                   ...senderUserReqBody,
                   ...{
-                    reply_to_message: replyMessageData?.text,
-                    reply_to_user: replyMessageData?.title,
-                    reply_type: replyMessageData?.sender_type,
+                    reply_to_message: repliedMessagesData?.message_text,
+                    reply_to_user: repliedMessagesData?.sender_name,
+                    reply_type: repliedMessagesData?.user_type,
                   },
                 },
           },
@@ -234,9 +235,9 @@ const ChatInput = props => {
               : {
                   ...senderAdminReqBody,
                   ...{
-                    reply_to_message: replyMessageData.text,
-                    reply_to_user: replyMessageData?.title,
-                    reply_type: replyMessageData.sender_type,
+                    reply_to_message: repliedMessagesData?.message_text,
+                    reply_to_user: repliedMessagesData?.sender_name,
+                    reply_type: repliedMessagesData?.user_type,
                   },
                 },
           },
@@ -252,6 +253,7 @@ const ChatInput = props => {
       )
     }
   }
+
   const sendChatOnKeyPress = e => {
     //it triggers by pressing the enter key
     var key = e.which || e.keyCode

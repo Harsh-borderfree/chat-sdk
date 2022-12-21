@@ -238,15 +238,21 @@ const ChatComponents = props => {
               </div>
             )
           })}
-        {showReplyPopup && <ChatReplyPop messageData={repliedMessagesData} {...props} />}
+        {showReplyPopup && <ChatReplyPop messageData={repliedMessagesData} {...props} setShowReplyPopup={setShowReplyPopup} />}
 
         {window.innerWidth > 1024 ? (
-          <ChatInput {...props} showReplyPopup={showReplyPopup} setShowReplyPopu={setShowReplyPopup} />
+          <ChatInput
+            {...props}
+            showReplyPopup={showReplyPopup}
+            setShowReplyPopup={setShowReplyPopup}
+            repliedMessagesData={repliedMessagesData}
+          />
         ) : (
           <ChatInputMobile
             {...props}
+            repliedMessagesData={repliedMessagesData}
             showReplyPopup={showReplyPopup}
-            setShowReplyPopu={setShowReplyPopup}
+            setShowReplyPopup={setShowReplyPopup}
             event_layout={event_layout}
           />
         )}

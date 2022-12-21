@@ -1,4 +1,4 @@
-import { MenuItem, Menu, SwipeableDrawer, Divider, IconButton } from '@mui/material'
+import { MenuItem, Menu, SwipeableDrawer, Divider, IconButton, Typography } from '@mui/material'
 import MoreVertOutlinedIcon from '@mui/icons-material/MoreVertOutlined'
 import { checkForBlockEmail, isUrl, uuidv4 } from '../ChatUtils/chatUtils'
 import PushPinOutlinedIcon from '@mui/icons-material/PushPinOutlined'
@@ -360,7 +360,7 @@ const ChatOptions = props => {
             />
 
             <div style={{ padding: '20px 16px 12px 16px' }}>
-              {isAllowed(props?.permissions, Permissions.invite_to_join_live.index) && showBlockOption && (
+              {isAllowed(permissions, Permissions.invite_to_join_live.index) && showBlockOption && (
                 <div
                   style={{
                     display: 'flex',
@@ -412,9 +412,8 @@ const ChatOptions = props => {
                     marginRight: '13px',
                   }}
                 />
-
-                {isAllowed(props?.permissions, Permissions.chat_admin_msg_pin.index) &&
-                  (adminPinnedMessages?.find(pinEl => pinEl.msg_id === props?.mesagesData?.id) ? (
+                {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) &&
+                  (adminPinnedMessages?.find(pinEl => pinEl?.message_id === selectedMessage?.id) ? (
                     <Typography
                       variant='h6'
                       style={{
@@ -423,10 +422,9 @@ const ChatOptions = props => {
                         fontWeight: '400',
                       }}
                       xid='4P'
-                      // onClick={() => {
-                      //   unPinMessages()
-                      //   setShowMenuItem(false)
-                      // }}
+                      onClick={() => {
+                        unPinMessages()
+                      }}
                     >
                       {t('watch.unpin_msg')}
                     </Typography>
@@ -439,10 +437,7 @@ const ChatOptions = props => {
                         fontWeight: '400',
                       }}
                       xid='4Q'
-                      // onClick={() => {
-                      //   onForwardClick()
-                      //   setShowMenuItem(false)
-                      // }}
+                      onClick={pinOnAdminClick}
                     >
                       {t('watch.pin_msg')}
                     </Typography>
@@ -457,10 +452,11 @@ const ChatOptions = props => {
                   cursor: 'pointer',
                 }}
                 xid='7y'
-                // onClick={() => {
-                //   onReplyClick()
-                //   setShowMenuItem(false)
-                // }}
+                onClick={() => {
+                  setShowMenuItem(false)
+                  props.setShowReplyPopup(true)
+                  props.setRepliedMessageData(selectedMessage)
+                }}
               >
                 <ReplyOutlinedIcon
                   style={{
@@ -497,40 +493,38 @@ const ChatOptions = props => {
                     }}
                   />
 
-                  {checkForBlockEmail(props?.mesagesData?.sender_id, currentEvent) < 0 && showBlockOption && (
-                    <Typography
-                      variant='h6'
-                      style={{
-                        fontSize: '16px',
-                        color: 'var(--text-color)',
-                        fontWeight: '400',
-                      }}
-                      xid='4R'
-                      // onClick={() => {
-                      //   onBlockClick()
-                      //   setShowMenuItem(false)
-                      // }}
-                    >
-                      {t('watch.block_user')}
-                    </Typography>
-                  )}
-                  {checkForBlockEmail(props?.mesagesData?.sender_id, currentEvent) >= 0 && showBlockOption && (
-                    <Typography
-                      variant='h6'
-                      style={{
-                        fontSize: '16px',
-                        color: 'var(--text-color)',
-                        fontWeight: '400',
-                      }}
-                      xid='4S'
-                      // onClick={() => {
-                      //   onUnblockClick()
-                      //   setShowMenuItem(false)
-                      // }}
-                    >
-                      {t('watch.unblock_user')}
-                    </Typography>
-                  )}
+                  {isAllowed(permissions, Permissions.chat_admin_msg_block.index) &&
+                    checkForBlockEmail(message?.sender_id, currentEvent) < 0 &&
+                    showBlockOption && (
+                      <Typography
+                        variant='h6'
+                        style={{
+                          fontSize: '16px',
+                          color: 'var(--text-color)',
+                          fontWeight: '400',
+                        }}
+                        xid='4R'
+                        onClick={onBlockClick}
+                      >
+                        {t('watch.block_user')}
+                      </Typography>
+                    )}
+                  {isAllowed(permissions, Permissions.chat_admin_msg_block.index) &&
+                    checkForBlockEmail(message?.sender_id, currentEvent) >= 0 &&
+                    showBlockOption && (
+                      <Typography
+                        variant='h6'
+                        style={{
+                          fontSize: '16px',
+                          color: 'var(--text-color)',
+                          fontWeight: '400',
+                        }}
+                        xid='4S'
+                        onClick={onUnblockClick}
+                      >
+                        {t('watch.unblock_user')}
+                      </Typography>
+                    )}
                 </div>
               )}
             </div>
