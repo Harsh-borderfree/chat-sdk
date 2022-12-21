@@ -32,6 +32,7 @@ const ChatInputMobile = props => {
     setEditDisplayNameMobile,
     selectDisplayName,
     setSelectDisplayName,
+    event_layout,
   } = props
   const classes = useStyles()
   const splitter = new GraphemeSplitter()
@@ -74,22 +75,7 @@ const ChatInputMobile = props => {
   const [showDisplayNameInput, setShowDisplayNameInput] = useState(false)
   const [inputMessage, setInputMessage] = useState('')
   const [userEmail, setUserEmail] = useState('')
-
-  const [event_layout, setEventLayout] = useState(
-    currentEvent?.event_type === 'call_1to1' && userRole === 'v2_1to1_customer' && window.innerWidth < 1025
-      ? 'portrait'
-      : currentEvent?.show_type
-      ? currentEvent?.show_type
-      : 'landscape'
-  )
-
-  useEffect(() => {
-    if (currentEvent?.event_type === 'call_1to1' && userRole === 'v2_1to1_customer' && window.innerWidth < 1025) {
-      setEventLayout('portrait')
-    } else if (currentEvent?.show_type === 'portrait' && currentEvent?.event_type === 'live_stream') {
-      setEventLayout('portrait')
-    }
-  }, [user_role, currentEvent?.show_type])
+  const userRole = EventPermission?.event_permission[eventID]?.event_role
 
   //   useEffect(() => {
   //     props?.setDisplayNameInput(userData?.displayName ? userData?.displayName : '')
@@ -746,7 +732,7 @@ const ChatInputMobile = props => {
                       variant='dot'
                       invisible={user_role === 'consumer' ? !props?.showViewerTab : !eventsState?.newGuestNotify}
                     >
-                      <MoreHorizOutlinedIcon color='#000000' />
+                      <MoreHorizOutlinedIcon />
                     </Badge>
                   </IconButton>
 
@@ -862,7 +848,7 @@ const ChatInputMobile = props => {
                         variant='dot'
                         invisible={user_role === 'consumer' ? !props?.showViewerTab : !eventsState?.newGuestNotify}
                       >
-                        <MoreHorizOutlinedIcon color='#000000' />
+                        <MoreHorizOutlinedIcon />
                       </Badge>
                     </IconButton>
                   )}

@@ -13,18 +13,17 @@ import ChatOptions from './ChatOptions'
 const ChatMessageBox = props => {
   const { t } = useTranslation()
   const message = props?.messageData
-  const { isAllowed, Permissions, eventID } = props
+  const { isAllowed, Permissions, eventID, event_layout } = props
   const EventPermission = useSelector(state => state.permission)
   const permissions = EventPermission?.event_permission[eventID]?.permission
+  const mobilePortrait = window.innerWidth < 1025 && event_layout === 'portrait'
 
   return (
     <div className='rce-container-mbox'>
       <div className='rce-mbox-title'>
         <div className='rce-mbox-title-left'>
           {message?.sender_name && (
-            <Typography className='rce-mbox-title-left-content' style={{ fontWeight: '600' }}>
-              {showThreeDotsAfterNText(message?.sender_name, 12)}
-            </Typography>
+            <Typography className='rce-mbox-title-left-content'>{showThreeDotsAfterNText(message?.sender_name, 12)}</Typography>
           )}
           {/* COmmented  for invite status icon will do it later */}
           {/* {this.props.checkUserStatus(this.props.sender_id) &&
@@ -41,7 +40,9 @@ const ChatMessageBox = props => {
             </div>
           )} */}
 
-          {message?.sender_name === localStorage.getItem('ORGNAME') && <BlueTickForBrand brandColor='blue' />}
+          {message?.sender_name === localStorage.getItem('ORGNAME') && (
+            <BlueTickForBrand color={mobilePortrait ? '#ffffff' : 'blue'} />
+          )}
         </div>
 
         {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) && <ChatOptions messageData={message} {...props} />}

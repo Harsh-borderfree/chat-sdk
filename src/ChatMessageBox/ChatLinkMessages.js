@@ -47,13 +47,7 @@ const ChatLinkMessages = ({ metaData, openLink }) => {
         </div>
         <div className='Description'>
           {metaData?.description && (
-            <span
-              data-testid='desc'
-              className='Description Secondary'
-              style={{
-                color: 'var(--text-color)',
-              }}
-            >
+            <span data-testid='desc' className='Description Secondary'>
               {metaData?.image
                 ? descriptionLength
                   ? metaData?.description?.length > descriptionLength

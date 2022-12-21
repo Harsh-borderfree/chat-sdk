@@ -25,7 +25,6 @@ const ChatOptions = props => {
   const [selectedMessage, setSelectedMessage] = useState({})
 
   let alreadyBlockedEmail = currentEvent?.chat_info?.blocked_Email?.length > 0 ? [...currentEvent?.chat_info?.blocked_Email] : []
-  console.log('+++++ALREADY BLOKCEDDD', alreadyBlockedEmail)
 
   const pinOnAdminClick = () => {
     setShowMenuItem(false)

@@ -11,7 +11,7 @@ import { FormControlUnstyled } from '@mui/base'
 const ChatPinnedMessage = props => {
   const { t } = useTranslation()
   const message = props?.messageData
-  const { isAllowed, Permissions, eventID } = props
+  const { isAllowed, Permissions, eventID, event_layout, setCurrentComponent } = props
   const [accordianActive, setAccordianActive] = useState(true)
   const EventPermission = useSelector(state => state.permission)
   const permissions = EventPermission?.event_permission[eventID]?.permission
@@ -19,25 +19,11 @@ const ChatPinnedMessage = props => {
   const { customisedEvents } = eventsState
   const currentEvent = customisedEvents[eventID]
   const userRole = EventPermission?.event_permission[eventID]?.event_role
-  const [event_layout, setEventLayout] = useState(
-    currentEvent?.event_type === 'call_1to1' && userRole === 'v2_1to1_customer' && window.innerWidth < 1025
-      ? 'portrait'
-      : currentEvent?.show_type
-      ? currentEvent?.show_type
-      : 'landscape'
-  )
+
   const [isOverflowingText, setIsOverflowingText] = useState(false)
   const [metaData, setmetaData] = useState({})
   const [isLinkInMessage, setIsLinkInMessage] = useState(false)
   const adminPinnedMessages = currentEvent?.chat_info?.pinned_message ? [...currentEvent?.chat_info?.pinned_message] : []
-
-  useEffect(() => {
-    if (currentEvent?.event_type === 'call_1to1' && userRole === 'v2_1to1_customer' && window.innerWidth < 1025) {
-      setEventLayout('portrait')
-    } else if (currentEvent?.show_type === 'portrait' && currentEvent?.event_type === 'live_stream') {
-      setEventLayout('portrait')
-    }
-  }, [userRole, currentEvent?.show_type])
 
   const countLines = () => {
     let elements = document.querySelectorAll('[id=pinned-message-text]')
@@ -134,8 +120,7 @@ const ChatPinnedMessage = props => {
                   className='chat-pinned-message-body-accordion-icon'
                   onClick={() => {
                     if (event_layout === 'portrait' && userRole === 'consumer' && window.innerWidth < 1025) {
-                      // this.props.openPinnedMessageDrawer(this.props.subtitle)
-                      //open pinned message drawer
+                      setCurrentComponent('RCPinnedMessageDrawer')
                     } else {
                       setAccordianActive(prev => !prev)
                     }
