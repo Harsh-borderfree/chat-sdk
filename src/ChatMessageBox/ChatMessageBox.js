@@ -20,7 +20,7 @@ const ChatMessageBox = props => {
   const mobilePortrait = window.innerWidth < 1025 && event_layout === 'portrait'
 
   return (
-    <div className='rce-container-mbox'>
+    <div className={`rce-container-mbox ${message?.message_type}`}>
       <div className='rce-mbox-title'>
         <div className='rce-mbox-title-left'>
           {message?.sender_name && (
