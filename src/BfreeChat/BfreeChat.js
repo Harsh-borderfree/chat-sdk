@@ -4,12 +4,9 @@ import { Provider } from 'react-redux'
 
 const BfreeChat = props => {
   const { eventID, groupID, store } = props
+  console.log('++++BFREEE CHAT', props)
 
-  return (
-    <Provider store={store}>
-      <ChatComponents {...props} />
-    </Provider>
-  )
+  return <ChatComponents {...props} />
 }
 
 export default BfreeChat

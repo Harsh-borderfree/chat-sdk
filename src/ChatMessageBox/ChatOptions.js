@@ -7,6 +7,7 @@ import ReplyOutlinedIcon from '@mui/icons-material/ReplyOutlined'
 import { useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import React from 'react'
 
 const ChatOptions = props => {
   const { t } = useTranslation()

@@ -1,4 +1,5 @@
 import { useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react'
 import { Typography } from '@mui/material'
 import { showThreeDotsAfterNText } from '../ChatUtils/chatUtils'
 import BlueTickForBrand from './ChatBlueTickBrand'

@@ -16,6 +16,7 @@ import NewMessageToast from '../ChatMessageList/NewMessageToast'
 import scrollIntoView from 'scroll-into-view-if-needed'
 
 const ChatComponents = props => {
+  console.log('+++++CHAT COMMMCCMMC')
   const { eventID, isChatLoading, setCurrentComponent } = props
   const allReduxMessages = useSelector(state => state?.chat?.allMessages)
   const allChatMessages = allReduxMessages[eventID] || []
