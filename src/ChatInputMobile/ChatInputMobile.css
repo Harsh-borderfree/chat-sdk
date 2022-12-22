@@ -12,6 +12,7 @@
 
 .RCBottom-Navbar-Container .MuiButtonBase-root {
   border-radius: unset;
+  color: #ffffff;
 }
 
 .tabpanel-holder .message-textField {
@@ -90,7 +91,7 @@
   font-size: 14px !important;
 }
 
-.anon-name-save-btn {
+.anon-joined .anon-name-save-btn {
   margin-left: 12px;
   height: 40px;
   width: 80px;
@@ -100,7 +101,7 @@
   align-items: center;
   position: relative;
   text-transform: uppercase;
-  background-color: black;
+  background-color: #000000 !important;
 }
 
 .circularProgress-div {
@@ -198,6 +199,10 @@
 }
 
 @media only screen and (max-width: 1024px) {
+  .RCChat-container.portrait .anon-joined .anon-name-save-btn {
+    background-color: #ffffff !important;
+  }
+
   .RCBottom-Navbar-Container-button #outlined-textarea,
   .RCBottom-Navbar-Container-button #outlined-textarea-blocked {
     padding: 0;

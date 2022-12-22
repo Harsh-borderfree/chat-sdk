@@ -50,21 +50,6 @@ p {
   margin-bottom: 6px;
 }
 
-.rce-mbox-reply {
-  border-left: 5px solid var(--brand-color);
-  border-color: var(--brand-color) !important;
-  background-color: rgba(var(--brand-color-red), var(--brand-color-green), var(--brand-color-blue), 0.16);
-  padding: 5px;
-  padding-left: 8px;
-  border-radius: 4px;
-  margin-bottom: 6px;
-}
-
-.rce-mbox-reply .rce-mbox-reply-title-content-left-text {
-  font-size: 14px;
-  font-weight: 500;
-}
-
 .RCChat-container .rce-container-mbox .rce-mbox-reply .rce-mbox-reply-title-content-left-text {
   font-size: 14px;
   font-weight: 500;
@@ -79,14 +64,11 @@ p {
   padding-top: 5px;
   overflow-y: auto;
   flex-grow: 3;
-  /* background-color: var(--theme-color); */
   box-sizing: border-box;
 }
 
-.rce-mbox-reply .rce-mbox-reply-message {
-  color: rgba(0, 0, 0, 0.7) !important;
-  font-size: 14px;
-  display: inline-block;
+.RCChat-container .icon-single-parent svg {
+  color: #000000;
 }
 
 .RCChat-container .rce-container-mbox .rce-mbox-reply .rce-mbox-reply-message {
@@ -117,6 +99,7 @@ p {
   width: 20px;
   height: 20px;
   margin-top: 4px;
+  color: #000000;
 }
 
 .RCChat-container .rce-container-mbox .rce-mbox-title .rce-mbox-title-left {
@@ -124,13 +107,65 @@ p {
   align-items: center;
 }
 
+.RCChat-PortraitView-Title {
+  font-weight: 600;
+  text-shadow: 0px 2px 2px rgb(0 0 0 / 50%);
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  z-index: 2;
+  max-height: 20px;
+}
+
 .Chat-message-list-container {
   width: 100%;
-  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
+}
+
+.new-message-btn-container {
+  width: 184px;
+  display: flex;
+  justify-content: center;
+  padding: 0px;
+  margin: auto;
+  cursor: pointer;
+}
+.rce-mbox-reply {
+  border-left: 5px solid;
+  border-color: var(--brand-color) !important;
+  background-color: rgba(var(--brand-color-red), var(--brand-color-green), var(--brand-color-blue), 0.16);
+  display: block;
+  min-width: auto;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 4px;
+}
+
+.rce-mbox-reply-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rce-mbox-reply-title .MuiSvgIcon-root {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+}
+
+.rce-mbox-reply-title-content-left-text {
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  color: #000000;
+  margin-left: 5px !important;
+}
+
+.rce-mbox-reply-message {
+  font-size: 12px !important;
+  color: #000000 !important;
 }
 
 .RCChat-Input-Container .MuiButton-root {
@@ -174,13 +209,28 @@ p {
   cursor: pointer;
 }
 
-/* .pinned-message-text-collapsed {
-  height: 15px;
+.pinned-message-text-collapsed {
+  max-height: 42px;
+  overflow-y: auto;
+}
+
+.tabpanel-holder .message-textField {
+  position: relative;
+}
+
+.message-textfield-character-limit {
+  position: absolute;
+  right: 4px;
+  bottom: 9px;
+}
+
+.message-textfield-character-limit .MuiTypography-root {
+  font-size: 12px;
 }
 
 .pinned-message-text-expand {
   max-height: unset;
-} */
+}
 
 .pinned-message-text-link {
   cursor: pointer;
@@ -198,14 +248,13 @@ p {
   white-space: break-spaces;
   display: block;
   display: -webkit-box;
-  max-height: 15px;
+  max-height: 42px;
   margin: 0 auto;
   font-family: 'Roboto', sans-serif !important;
   line-height: 1.4;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  white-space: break-spaces;
 }
 
 .pinned-message-text-normal-expand,
@@ -213,8 +262,6 @@ p {
   color: #ffffff !important;
   word-break: break-word;
   font-size: 14px;
-  white-space: normal;
-  max-height: unset;
 }
 .Description-pin span {
   color: #ffffff;
@@ -1542,13 +1589,9 @@ textarea ~ grammarly-extension {
   cursor: pointer;
 }
 
-.Secondary {
-  color: black;
-}
-
 .titleContainer {
   margin-bottom: 4px;
-  color: var(--text-color) !important;
+  color: var(--text-color);
 }
 
 .Title {
@@ -1599,6 +1642,9 @@ textarea ~ grammarly-extension {
 
 .RC-MessageList .rce-container-mbox .rce-mbox-body {
   padding: 2px !important;
+}
+.rce-mbox-reply-message {
+  padding-left: 5px;
 }
 
 [contenteditable] ~ grammarly-extension,
@@ -1806,11 +1852,82 @@ textarea ~ grammarly-extension {
   z-index: 2;
 }
 
+.Chat-message-list-container.loading {
+  opacity: 0.6;
+}
+
+.RCChat-CircularProgress {
+  position: absolute;
+  top: 42%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
+
 @media only screen and (max-width: 1024px) {
-  .RCChat-container.consumer {
-    padding-bottom: 16px;
+  .RCChat-container.portrait .rce-container-mbox {
+    background-color: rgba(38, 38, 38, 0.4) !important;
+    width: max-content;
+    max-width: 100%;
+    border: none;
   }
-  .tabpanel-holder.portrait .RCReplyMessageBox-active .rce-mbox-reply.rce-mbox-reply-border {
+
+  .RCChat-container.portrait .rce-container-mbox .rce-mbox-title .rce-mbox-title-right .MuiSvgIcon-root {
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+    color: #ffffff;
+  }
+
+  .RCChat-container.portrait .icon-single-parent svg {
+    color: #ffffff;
+  }
+
+  .RCChat-container.portrait .anon-container-mbox {
+    background-color: rgba(38, 38, 38, 0.4) !important;
+    width: 100%;
+    border: none;
+  }
+
+  .RCChat-container.portrait .rce-container-mbox .rce-mbox-title .rce-mbox-title-left .rce-mbox-title-left-content,
+  .RCChat-container.portrait .rce-container-mbox .text-message-content,
+  .RCChat-container.portrait .anon-container-mbox .MuiTypography-root {
+    color: #ffffff !important;
+  }
+
+  .RCChat-container.portrait .rce-container-mbox {
+    margin-bottom: 2px;
+    margin-top: 2px;
+  }
+
+  .RCChat-container.portrait .RCChat-content-container {
+    padding: 0px 16px;
+  }
+
+  .RCChat-container.portrait .pin-msg-box {
+    width: 91%;
+    margin: auto;
+  }
+
+  .RCChat-container.portrait .rce-container-mbox .titleContainer,
+  .RCChat-container.portrait .rce-container-mbox .Secondary,
+  .RCChat-container.portrait .rce-container-mbox .text-message-link,
+  .RCChat-container.portrait .rce-container-mbox .rce-mbox-reply .rce-mbox-reply-title-content-left-text,
+  .RCChat-container.portrait .rce-container-mbox .box .SiteDetails .MuiSvgIcon-root,
+  .RCChat-container.portrait .rce-container-mbox .rce-mbox-reply .rce-mbox-reply-message {
+    color: #ffffff !important;
+  }
+
+  .RCChat-container.portrait .rce-container-mbox .rce-mbox-reply {
+    background-color: rgba(38, 38, 38, 0.4) !important;
+    border: none;
+  }
+
+  .RCChat-container.consumer {
+    padding-bottom: 0px;
+  }
+
+  .RCChat-content-container .tabpanel-holder.portrait .RCReplyMessageBox-active .rce-mbox-reply.rce-mbox-reply-border {
     background-color: rgba(38, 38, 38, 0.6) !important;
   }
 
@@ -1888,7 +2005,7 @@ textarea ~ grammarly-extension {
     width: 80% !important;
   }
 
-  .tabpanel-holder.portrait .RC-MessageList.try-on-msg .anon-container-mbox {
+  .tabpanel-holder.portrait .anon-container-mbox {
     background-color: #ecf3fd;
     color: rgba(0, 0, 0, 0.87);
     opacity: 0.8;
@@ -2158,7 +2275,6 @@ textarea ~ grammarly-extension {
     font-weight: 600;
     text-shadow: 0px 2px 2px rgb(0 0 0 / 50%);
     display: flex;
-    justify-content: center;
     align-items: center;
     z-index: 2;
     max-height: 20px;
