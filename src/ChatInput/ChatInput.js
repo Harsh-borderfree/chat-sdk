@@ -612,7 +612,7 @@ const ChatInput = props => {
               ),
             }}
             onKeyDown={e => {
-              if (!maxLimitExceeds || inputMessage?.length > 0) {
+              if (!maxLimitExceeds && inputMessage?.length > 0) {
                 sendChatOnKeyPress(e)
               }
             }}
@@ -725,7 +725,7 @@ const ChatInput = props => {
               disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
               xid='4Z'
               onClick={() => {
-                if (!maxLimitExceeds || inputMessage?.length > 0) {
+                if (!maxLimitExceeds && inputMessage?.length > 0) {
                   sendChat()
                 }
               }}
