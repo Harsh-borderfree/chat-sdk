@@ -163,6 +163,7 @@ const ChatInput = props => {
 
   // Send Chat Function
   const sendChat = () => {
+    console.log('+++++SENENENNEN', inputMessage.length)
     setShowEmojiPicker(false)
     let message = inputMessage.trim()
     setInputMessage('')
@@ -556,9 +557,9 @@ const ChatInput = props => {
           setMaxLimitExceeds(true)
         } else {
           setMaxLimitExceeds(false)
-          let inputMessagePostUserTypesInEmoji = updateInputValue(inputMessage, emoji.native)
-          setInputMessage(inputMessagePostUserTypesInEmoji)
         }
+        let inputMessagePostUserTypesInEmoji = updateInputValue(inputMessage, emoji.native)
+        setInputMessage(inputMessagePostUserTypesInEmoji)
       }}
     />
   )
@@ -598,9 +599,9 @@ const ChatInput = props => {
                 setMaxLimitExceeds(true)
               } else {
                 setMaxLimitExceeds(false)
-                setInputMessage(e.target.value)
-                countTextfieldLines(e)
               }
+              setInputMessage(e.target.value)
+              countTextfieldLines(e)
             }}
             InputProps={{
               endAdornment: (
@@ -612,7 +613,7 @@ const ChatInput = props => {
               ),
             }}
             onKeyDown={e => {
-              if (!maxLimitExceeds && inputMessage?.length > 0) {
+              if (!maxLimitExceeds && inputMessage.length > 0) {
                 sendChatOnKeyPress(e)
               }
             }}
@@ -725,7 +726,8 @@ const ChatInput = props => {
               disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
               xid='4Z'
               onClick={() => {
-                if (!maxLimitExceeds && inputMessage?.length > 0) {
+                console.log('+++++++IIIIIIII', inputMessage.length)
+                if (!maxLimitExceeds && inputMessage.length > 0) {
                   sendChat()
                 }
               }}
