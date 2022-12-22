@@ -10,6 +10,7 @@ import {
   FormControl,
   RadioGroup,
   Radio,
+  InputAdornment,
 } from '@mui/material'
 import GraphemeSplitter from 'grapheme-splitter'
 import { Picker } from 'emoji-mart'
@@ -55,6 +56,7 @@ const ChatInput = props => {
   const [showChangeChatTitleBox, setShowChangeChatTitleBox] = useState(false)
   const userRole = EventPermission?.event_permission[eventID]?.event_role
   const [showEmojiPicker, setShowEmojiPicker] = useState(false)
+  const TEXT_LIMIT = 200
 
   // Utils function
   const isHostAndPrimaryHost = email => {
@@ -261,17 +263,15 @@ const ChatInput = props => {
     if (window.innerWidth > 1024)
       if (e.keyCode === 13 && !e.shiftKey) {
         //for tablets and laptops
-        if (!maxLimitExceeds) {
-          sendChat()
-          setShowEmojiPicker(false)
-        }
+        sendChat()
+        setShowEmojiPicker(false)
+
         e.preventDefault()
       } else if (e.keyCode === 13 && !e.shiftKey && e.key !== 'Enter') {
         //for mobiles
-        if (!maxLimitExceeds) {
-          sendChat()
-          setShowEmojiPicker(false)
-        }
+        sendChat()
+        setShowEmojiPicker(false)
+
         e.preventDefault()
       }
   }
@@ -602,7 +602,20 @@ const ChatInput = props => {
                 countTextfieldLines(e)
               }
             }}
-            onKeyDown={sendChatOnKeyPress}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position='end' className='message-textfield-character-limit'>
+                  <Typography>
+                    <span>{inputMessage?.length}</span>/{TEXT_LIMIT}
+                  </Typography>
+                </InputAdornment>
+              ),
+            }}
+            onKeyDown={e => {
+              if (!maxLimitExceeds || inputMessage?.length > 0) {
+                sendChatOnKeyPress(e)
+              }
+            }}
           />
           <div
             className='button-below-input'
@@ -712,7 +725,7 @@ const ChatInput = props => {
               disabled={checkForBlockEmail(loggedInEmail, currentEvent) >= 0}
               xid='4Z'
               onClick={() => {
-                if (!maxLimitExceeds) {
+                if (!maxLimitExceeds || inputMessage?.length > 0) {
                   sendChat()
                 }
               }}
