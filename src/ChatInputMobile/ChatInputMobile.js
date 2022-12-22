@@ -71,7 +71,7 @@ const ChatInputMobile = props => {
   )
   const permissions = EventPermission?.event_permission[eventID]?.permission
 
-  const [displayNameInput, setDisplayNameInput] = useState('')
+  const [displayNameInput, setDisplayNameInput] = useState(userData?.displayName ? userData?.displayName : '')
   const [updatingDisplayName, setUpdatingDisplayName] = useState(false)
   const [showDisplayNameInput, setShowDisplayNameInput] = useState(false)
   const [inputMessage, setInputMessage] = useState('')

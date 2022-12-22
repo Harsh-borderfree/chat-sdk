@@ -46,7 +46,9 @@ const ChatMessageBox = props => {
           )}
         </div>
 
-        {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) && <ChatOptions messageData={message} {...props} />}
+        {isAllowed(permissions, Permissions.chat_admin_msg_pin.index) &&
+          message?.message_type === 'text' &&
+          !message?.reply_type && <ChatOptions messageData={message} {...props} />}
       </div>
 
       {message?.reply_type && <ChatReplyMessage messageData={message} {...props} />}

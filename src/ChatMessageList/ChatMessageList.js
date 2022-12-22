@@ -103,13 +103,13 @@ const ChatMessageList = props => {
           let mlistH = 0
           let endDivH = 0
           if (mlist && mlist[0]) {
-            mlistH = mlist[0].getBoundingClientRect().bottom
+            mlistH = mlist[0]?.getBoundingClientRect().bottom
           }
 
           if (endDiv) {
             endDivH = endDiv.getBoundingClientRect().bottom
           }
-          if (endDivH - mlistH <= 10) {
+          if (endDiv?.getBoundingClientRect().bottom - mlist?.mlist[0]?.getBoundingClientRect().bottom <= 10) {
             console.log('===>CALLING SCROLL TO BOTTOM AND NEW MESSAGE TOASTE FALSE LINE NU 50')
             setTimeout(() => {
               scrollToBottom()
