@@ -8,7 +8,7 @@ const ChatReplyMessage = props => {
   const message = props?.messageData
 
   return (
-    <div className='rce-mbox-reply-container'>
+    <div className='rce-mbox-reply-container' id='reply-popup'>
       <div className='rce-mbox-reply'>
         <div className='rce-mbox-reply-title'>
           <div

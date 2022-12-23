@@ -31,7 +31,7 @@ const ChatMessageList = props => {
   const allChatMessages = allReduxMessages[eventID] || []
   let bottomInputElement = document.getElementsByClassName('RCChat-Input-Container')
   let bottomInputHeight = 50
-  if (bottomInputElement) {
+  if (bottomInputElement?.length > 0 && bottomInputElement[0]) {
     bottomInputHeight = bottomInputElement[0]?.clientHeight
   }
   const replayMessages = useSelector(state => state?.chat?.replayMessages)
@@ -53,7 +53,7 @@ const ChatMessageList = props => {
 
   useEffect(() => {
     setTimeout(() => {
-      var chatHistory = document.getElementById('messageBody')
+      var chatHistory = document.getElementById('message-container')
       if (chatHistory) chatHistory.scrollTop = chatHistory.scrollHeight
     }, 100)
   }, [])
@@ -79,7 +79,7 @@ const ChatMessageList = props => {
       setTimeout(() => {
         let mlist = document.getElementsByClassName('Chat-message-list-container')
         let isOverflowing = false
-        if (mlist && mlist[0]) {
+        if (mlist?.length > 0 && mlist[0]) {
           isOverflowing = mlist[0]?.clientWidth < mlist[0]?.scrollWidth || mlist[0]?.clientHeight < mlist[0]?.scrollHeight
           setIsOverflowingChat(isOverflowing)
         }
@@ -93,30 +93,21 @@ const ChatMessageList = props => {
     if (singleMessage?.length != 0) {
       if (singleMessage[0]?.requestMsg && singleMessage[0]?.requestMsg?.requestMsg.status === 'added') {
         if (loggingUser === singleMessage[0]?.requestMsg?.requestMsg.sender_id) {
-          console.log('===>CALLING SCROLL TO BOTTOM LINE NUMBER 32')
           setTimeout(() => {
             scrollToBottom()
           }, 300)
         } else {
-          let mlist = document.getElementsByClassName('Chat-message-list-container')
+          let mlist = document.getElementById('message-container')
           let endDiv = document.getElementById('end-div')
-          let mlistH = 0
-          let endDivH = 0
-          if (mlist && mlist[0]) {
-            mlistH = mlist[0]?.getBoundingClientRect().bottom
-          }
+          let mlistH = mlist?.getBoundingClientRect().bottom
+          let endDivH = endDiv?.getBoundingClientRect().bottom
 
-          if (endDiv) {
-            endDivH = endDiv.getBoundingClientRect().bottom
-          }
-          if (endDiv?.getBoundingClientRect().bottom - mlist?.mlist[0]?.getBoundingClientRect().bottom <= 10) {
-            console.log('===>CALLING SCROLL TO BOTTOM AND NEW MESSAGE TOASTE FALSE LINE NU 50')
+          if (endDivH - mlistH <= 10) {
             setTimeout(() => {
               scrollToBottom()
             }, 300)
             setShowNewMessageToast(false)
           } else {
-            console.log('===>CALLING NEW MESSAGE TOASTE TRUE LINE NU 57')
             // SHOW NEW MESSAGE TOAST IF CHAT IS VISIBLE
             setShowNewMessageToast(true)
           }
@@ -129,11 +120,11 @@ const ChatMessageList = props => {
     let mbox = document.getElementsByClassName('rce-container-mbox')
     let anonMBox = document.getElementsByClassName('anon-container-mbox')
 
-    if (mbox && mbox[0]) {
+    if (mbox?.length > 0 && mbox[0]) {
       mbox[0].style.display = 'none'
     }
 
-    if (anonMBox && anonMBox[0]) {
+    if (anonMBox?.length > 0 && anonMBox[0]) {
       anonMBox[0].style.display = 'none'
     }
   }
@@ -142,11 +133,11 @@ const ChatMessageList = props => {
     let mbox = document.getElementsByClassName('rce-container-mbox')
     let anonMBox = document.getElementsByClassName('anon-container-mbox')
 
-    if (mbox && mbox[0]) {
+    if (mbox?.length > 0 && mbox[0]) {
       mbox[0].style.display = 'block'
     }
 
-    if (anonMBox && anonMBox[0]) {
+    if (anonMBox?.length > 0 && anonMBox[0]) {
       anonMBox[0].style.display = 'block'
     }
   }
@@ -194,7 +185,7 @@ const ChatMessageList = props => {
           if (!hasMoreChats || isAtTop(e.currentTarget)) return
           handleLoadMore()
         }}
-        id='messageBody'
+        id='message-container'
       >
         {mobilePortrait && !isOverFLowingChat && allChatMessages?.length > 0 && (
           <div

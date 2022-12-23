@@ -26,11 +26,11 @@ const ChatPinnedMessage = props => {
   const adminPinnedMessages = currentEvent?.chat_info?.pinned_message ? [...currentEvent?.chat_info?.pinned_message] : []
 
   const countLines = () => {
-    let elements = document.querySelectorAll('[id=pinned-message-text]')
+    let elements = document.getElementById('pinned-message-text')
 
     let isOverflowing = false
-    if (elements && elements[0]) {
-      isOverflowing = elements[0]?.clientWidth < elements[0]?.scrollWidth || elements[0]?.clientHeight < elements[0]?.scrollHeight
+    if (elements) {
+      isOverflowing = elements?.clientWidth < elements?.scrollWidth || elements?.clientHeight < elements?.scrollHeight
     }
 
     setIsOverflowingText(isOverflowing)
@@ -84,7 +84,7 @@ const ChatPinnedMessage = props => {
 
   return (
     <>
-      <div className='rce-container-citem chat-pinned-message-container'>
+      <div id='pinned-message' className='rce-container-citem chat-pinned-message-container'>
         <div className='chat-pinned-message-body'>
           <div className='chat-pinned-message-body--top'>
             <div className='chat-pinned-message-body--top-left'>

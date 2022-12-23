@@ -60,9 +60,11 @@ const ChatInputMobile = props => {
   const EventPermission = useSelector(state => state.permission)
   const [helperText, setHelperText] = useState(false)
   const user_role = EventPermission?.event_permission[eventID]?.event_role
-  const shareLikeButtons = document.getElementsByClassName('fixed_share_button')[0]
-  if (shareLikeButtons) {
-    focusTextfield ? shareLikeButtons.classList.add('activeMessageBox') : shareLikeButtons.classList.remove('activeMessageBox')
+  const shareLikeButtons = document.getElementsByClassName('fixed_share_button')
+  if (shareLikeButtons?.length > 0 && shareLikeButtons[0]) {
+    focusTextfield
+      ? shareLikeButtons[0].classList.add('activeMessageBox')
+      : shareLikeButtons[0].classList.remove('activeMessageBox')
   }
   const allReduxHostChatAsBrand = useSelector(state => state?.chat?.hostChatAsBrand)
   const hostChatAsBrand = allReduxHostChatAsBrand && allReduxHostChatAsBrand[eventID] ? allReduxHostChatAsBrand[eventID] : {}
@@ -271,6 +273,29 @@ const ChatInputMobile = props => {
       )
     }
   }
+
+  const showProductHighlightAndPin = () => {
+    const productHighlight = document.getElementsByClassName('highlighter_panel_mobile')
+    if (productHighlight?.length > 0 && productHighlight[0]) {
+      productHighlight[0].style.display = 'flex'
+    }
+    const pinnedMes = document.getElementsById('pinned-messages')
+    if (pinnedMes) {
+      pinnedMes.style.display = 'flex'
+    }
+  }
+
+  const hideProductHighlightAndPin = () => {
+    const productHighlight = document.getElementsByClassName('highlighter_panel_mobile')
+    if (productHighlight?.length > 0 && productHighlight[0]) {
+      productHighlight[0].style.display = 'flex'
+    }
+    const pinnedMes = document.getElementsById('pinned-messages')
+    if (pinnedMes) {
+      pinnedMes.style.display = 'flex'
+    }
+  }
+
   const ChangeDisplayNameInput = () => (
     <div className='anon-joined'>
       <TextField
@@ -286,7 +311,6 @@ const ChatInputMobile = props => {
         }}
         onChange={e => {
           let validResponse = handleDisplayName(e?.target?.value, displayNameInput, t)
-
           setDisplayNameInput(validResponse.name)
           setHelperText(validResponse.helperText)
         }}
@@ -298,10 +322,10 @@ const ChatInputMobile = props => {
               <Button
                 className='anon-name-save-btn'
                 style={{
-                  cursor: displayNameInput?.length === 0 ? 'default' : 'pointer',
-                  color: displayNameInput?.length === 0 ? '#000000' : 'white',
+                  cursor: displayNameInput?.length === 0 || displayNameInput === userData?.displayName ? 'default' : 'pointer',
+                  color: displayNameInput?.length === 0 || displayNameInput === userData?.displayName ? '#000000' : 'white',
                 }}
-                disabled={displayNameInput?.length === 0 ? true : false}
+                disabled={displayNameInput?.length === 0 || displayNameInput === userData?.displayName ? true : false}
                 xid='4V'
                 onClick={e => {
                   e.stopPropagation()
@@ -571,10 +595,7 @@ const ChatInputMobile = props => {
                   }
 
                   if (event_layout === 'landscape') {
-                    let productHighlight = document.getElementsByClassName('highlighter_panel_mobile')[0]
-                    if (productHighlight) productHighlight.style.display = 'flex'
-                    let pinnedMes = document.getElementsByClassName('pinned-messages')[0]
-                    if (pinnedMes) pinnedMes.style.display = 'flex'
+                    showProductHighlightAndPin()
                   }
 
                   setFocusTextfield(false)
@@ -587,8 +608,8 @@ const ChatInputMobile = props => {
                         xid='4Z'
                         onClick={e => {
                           e.stopPropagation()
-                          if (!maxLimitExceeds) {
-                            // sendChat()
+                          if (!maxLimitExceeds && inputMessage.length > 0) {
+                            sendChat()
                             setFocusTextfield(false)
 
                             if (event_layout === 'portrait') {
@@ -598,15 +619,12 @@ const ChatInputMobile = props => {
                             }
 
                             if (event_layout === 'landscape') {
-                              let productHighlight = document.getElementsByClassName('highlighter_panel_mobile')[0]
-                              if (productHighlight) productHighlight.style.display = 'flex'
-                              let pinnedMes = document.getElementsByClassName('pinned-messages')[0]
-                              if (pinnedMes) pinnedMes.style.display = 'flex'
+                              showProductHighlightAndPin()
                             }
                           }
                         }}
                         onMouseDown={() => {
-                          if (!maxLimitExceeds) {
+                          if (!maxLimitExceeds && inputMessage.length > 0) {
                             sendChat()
                             setFocusTextfield(false)
                             if (event_layout === 'portrait') {
@@ -616,10 +634,7 @@ const ChatInputMobile = props => {
                             }
 
                             if (event_layout === 'landscape') {
-                              let productHighlight = document.getElementsByClassName('highlighter_panel_mobile')[0]
-                              if (productHighlight) productHighlight.style.display = 'flex'
-                              let pinnedMes = document.getElementsByClassName('pinned-messages')[0]
-                              if (pinnedMes) pinnedMes.style.display = 'flex'
+                              showProductHighlightAndPin()
                             }
                           }
                         }}
@@ -690,10 +705,7 @@ const ChatInputMobile = props => {
                         }
 
                         if (event_layout === 'landscape') {
-                          let productHighlight = document.getElementsByClassName('highlighter_panel_mobile')[0]
-                          if (productHighlight) productHighlight.style.display = 'none'
-                          let pinnedMes = document.getElementsByClassName('pinned-messages')[0]
-                          if (pinnedMes) pinnedMes.style.display = 'none'
+                          hideProductHighlightAndPin()
                         }
                       }}
                       placeholder={

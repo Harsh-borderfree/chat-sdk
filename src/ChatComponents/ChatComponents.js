@@ -41,40 +41,40 @@ const ChatComponents = props => {
   const mobilePortrait = window.innerWidth < 1025 && event_layout === 'portrait'
 
   //For position of chat accordian when close
-  let pinnedElement = document.getElementsByClassName('pin-msg-box')
+  let pinnedElement = document.getElementsById('pin-msg-con')
   let pushedPollContainer = document.getElementsByClassName('RCPoll-Wrapper')
   let pushedBannerContainer = document.getElementsByClassName('parent_banner')
   let messageTextField = document.getElementsByClassName('message-textField')
-  let newMessageToast = document.getElementsByClassName('new-messages-button')
-  let replyBox = document.getElementsByClassName('RCReplyMessageBox-active')
+  let newMessageToast = document.getElementsById('new-msg-toaster')
+  let replyBox = document.getElementsById('reply-popup')
 
   let newMessageToastHeight = 0
 
-  if (newMessageToast[0]) {
-    newMessageToastHeight = newMessageToast[0]?.clientHeight
+  if (newMessageToast) {
+    newMessageToastHeight = newMessageToast?.clientHeight
   }
 
   let messageTextFieldHeight = 99
-  if (messageTextField[0]) {
+  if (messageTextField?.length > 0 && messageTextField[0]) {
     messageTextFieldHeight = Math.max(messageTextField[0]?.clientHeight + 25, 99)
   }
 
   let replyBoxHeight = 0
-  if (replyBox[0]) {
-    replyBoxHeight = replyBox[0]?.clientHeight
+  if (replyBox) {
+    replyBoxHeight = replyBox?.clientHeight
   }
 
   let pinContainerHeight = 0
-  if (pinnedElement[0]) {
-    pinContainerHeight = pinnedElement[0]?.clientHeight
+  if (pinnedElement) {
+    pinContainerHeight = pinnedElement?.clientHeight
   }
 
   let pushedBannerContainerHeight = 0
-  if (pushedBannerContainer[0]) {
+  if (pushedBannerContainer?.length > 0 && pushedBannerContainer[0]) {
     pushedBannerContainerHeight = pushedBannerContainer[0]?.clientHeight
   }
   let pushedPollContainerHeight = 0
-  if (pushedPollContainer[0]) {
+  if (pushedPollContainer?.length > 0 && pushedPollContainer[0]) {
     pushedPollContainerHeight = pushedPollContainer[0]?.clientHeight + 10
   }
   let largestHeight = Math.max(pinContainerHeight, pushedBannerContainerHeight, pushedPollContainerHeight)
@@ -95,14 +95,14 @@ const ChatComponents = props => {
   // 5.Joined the chat messages
 
   const makeChatHidden = () => {
-    let mlist = document.getElementsByClassName('Chat-message-list-container')
+    let mlist = document.getElementsByClassName('message-container')
     let chatTitle = document.getElementsByClassName('RCChat-PortraitView-Title-overflow')
 
-    if (mlist && mlist[0]) {
-      mlist[0].style.visibility = 'hidden'
+    if (mlist && mlist) {
+      mlist.style.visibility = 'hidden'
     }
 
-    if (chatTitle && chatTitle[0]) {
+    if (chatTitle?.length > 0 && chatTitle[0]) {
       chatTitle[0].style.top = `calc(100% - ${messageTextFieldHeight}px - ${largestHeight}px - ${newMessageToastHeight}px - ${replyBoxHeight}px)`
     }
   }
@@ -111,11 +111,11 @@ const ChatComponents = props => {
     let mlist = document.getElementsByClassName('Chat-message-list-container')
     let chatTitle = document.getElementsByClassName('RCChat-PortraitView-Title-overflow')
 
-    if (mlist && mlist[0]) {
+    if (mlist?.length > 0 && mlist[0]) {
       mlist[0].style.visibility = 'visible'
     }
 
-    if (chatTitle && chatTitle[0]) {
+    if (chatTitle?.length > 0 && chatTitle[0]) {
       chatTitle[0].style.top = '0px'
     }
   }
@@ -152,7 +152,7 @@ const ChatComponents = props => {
           adminPinnedMessages?.length > 0 &&
           adminPinnedMessages?.map(message => {
             return (
-              <div key={message.pin_id} className='pin-msg-box'>
+              <div key={message.pin_id} className='pin-msg-box' id='pin-msg-con'>
                 <ChatPinnedMessage messageData={message} {...props} event_layout={event_layout} />
               </div>
             )
@@ -225,7 +225,7 @@ const ChatComponents = props => {
             }}
             size='large'
           >
-            <NewMessageToast size={25} className='new-messages-button' />
+            <NewMessageToast size={25} className='new-messages-button' id='new-msg-toaster' />
           </div>
         )}
         {mobilePortrait &&
@@ -233,7 +233,7 @@ const ChatComponents = props => {
           adminPinnedMessages?.length > 0 &&
           adminPinnedMessages?.map(message => {
             return (
-              <div key={message.pin_id} className='pin-msg-box'>
+              <div key={message.pin_id} className='pin-msg-box' id='pin-msg-con'>
                 <ChatPinnedMessage messageData={message} {...props} event_layout={event_layout} />
               </div>
             )
